@@ -1,0 +1,34 @@
+= AdminFaces Starter Persistence
+
+
+A simple project to get you started with https://github.com/adminfaces[AdminFaces^] using https://deltaspike.apache.org/documentation/data.html[DeltaSpike Data^] for utility persistence layer.
+
+.Login page
+image:starter1.png[]
+
+.Car list
+image:starter2.png[]
+
+.Car form
+image:starter3.png[]
+
+.Car form responsive
+image:starter4.png[]
+
+== Running
+
+It should run in any JavaEE 6 or greater application server.
+
+You can also run via wildfly-swarm with command `mvn wildfly-swarm:run -Pswarm`.
+
+Or using docker:
+
+----
+docker run -it -p 8080:8080 rmpestano/admin-starter
+----
+
+The application is available at http://localhost:8080/admin-starter
+
+== Demo
+
+A live demo is available on Openshift here: http://starter-adminfaces.rhcloud.com/admin-starter/

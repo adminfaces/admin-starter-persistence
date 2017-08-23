@@ -1,0 +1,181 @@
+package com.github.adminfaces.starter.infra.persistence;
+
+import com.github.adminfaces.starter.infra.model.BaseEntity;
+import com.github.adminfaces.starter.infra.model.Filter;
+import com.github.adminfaces.starter.infra.model.SortOrder;
+import com.github.adminfaces.template.exception.BusinessException;
+import org.apache.deltaspike.data.api.criteria.Criteria;
+import org.apache.deltaspike.data.api.criteria.CriteriaSupport;
+import org.apache.deltaspike.data.impl.handler.CriteriaSupportHandler;
+
+import javax.enterprise.inject.spi.InjectionPoint;
+import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.metamodel.SingularAttribute;
+import java.io.Serializable;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.util.List;
+
+/**
+ * @author rmpestano
+ *
+ * Utility service for crud
+ */
+public abstract class CrudService<T extends BaseEntity, K extends Serializable> extends CriteriaSupportHandler<T> implements CriteriaSupport<T> {
+
+    protected Class<T> entityClass;
+
+    protected Class<K> entityKey;
+
+    @Inject
+    protected EntityManager entityManager;
+
+
+    @Inject
+    public void CrudService(InjectionPoint ip) {
+        if (ip != null && ip.getType() != null) {
+            try {
+                //will work for @Inject CrudService<Entity,Key>
+                resolveEntity(ip);
+            } catch (Exception e) {
+            }
+        }
+
+        if (entityClass == null) {
+            //will work for service inheritance MyService extends CrudService<Entity, Key>
+            entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+            entityKey = (Class<K>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+
+        }
+    }
+
+    private void resolveEntity(InjectionPoint ip) {
+        ParameterizedType type = (ParameterizedType) ip.getType();
+        Type[] typeArgs = type.getActualTypeArguments();
+        entityClass = (Class<T>) typeArgs[0];
+        entityKey = (Class<K>) typeArgs[1];
+    }
+
+    public List<T> paginate(Filter<T> filter) {
+        Criteria<T, T> criteria = configRestrictions(filter);
+
+        String sortField = filter.getSortField();
+        if (sortField != null) {
+            SingularAttribute sortAttribute = entityManager.getMetamodel().entity(entityClass).getSingularAttribute(sortField);
+            if (filter.getSortOrder().equals(SortOrder.UNSORTED)) {
+                filter.setSortOrder(SortOrder.ASCENDING);
+            }
+            if (filter.getSortOrder().equals(SortOrder.ASCENDING)) {
+                criteria.orderAsc(sortAttribute);
+            } else {
+                criteria.orderDesc(sortAttribute);
+            }
+        }
+
+        return criteria.createQuery()
+                .setFirstResult(filter.getFirst())
+                .setMaxResults(filter.getPageSize())
+                .getResultList();
+    }
+
+    protected abstract Criteria<T, T> configRestrictions(Filter<T> filter);
+
+
+    public void insert(T entity) {
+        if (entity == null) {
+            throw new BusinessException("Entity cannot be null");
+        }
+
+        if (entity.getId() != null) {
+            throw new BusinessException("Entity must be transient");
+        }
+        beforeInsert(entity);
+        entityManager.persist(entity);
+        afterInsert(entity);
+    }
+
+    public void remove(T entity) {
+        if (entity == null) {
+            throw new BusinessException("Entity cannot be null");
+        }
+
+        if (entity.getId() == null) {
+            throw new BusinessException("Entity cannot be transient");
+        }
+        beforeRemove(entity);
+        entityManager.remove(entityManager.find(entityClass, entity.getId()));
+        afterRemove(entity);
+    }
+
+
+    public void remove(List<T> entities) {
+        if (entities == null) {
+            throw new BusinessException("Entities cannot be null");
+        }
+        for (T t : entities) {
+            this.remove(t);
+        }
+    }
+
+    public void update(T entity) {
+        if (entity == null) {
+            throw new BusinessException("Entity cannot be null");
+        }
+
+        if (entity.getId() == null) {
+            throw new BusinessException("Entity cannot be transient");
+        }
+        beforeUpdate(entity);
+        entityManager.merge(entity);
+        afterUpdate(entity);
+    }
+
+    public long count(Filter<T> filter) {
+        SingularAttribute<? super T, K> id = entityManager.getMetamodel().entity(entityClass).getId(entityKey);
+        return configRestrictions(filter)
+                .select(Long.class, count(id))
+                .getSingleResult();
+    }
+
+    public T findById(Integer id) {
+        T entity = entityManager.find(entityClass, id);
+        if (entity == null) {
+            new BusinessException("Entity not found with id " + id);
+        }
+        return entity;
+    }
+
+
+    @Override
+    public Class<T> getEntityClass() {
+        return entityClass;
+    }
+
+    @Override
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
+
+    public void beforeInsert(T entity) {
+
+    }
+
+    public void afterInsert(T entity) {
+    }
+
+    public void beforeUpdate(T entity) {
+
+    }
+
+    public void afterUpdate(T entity) {
+    }
+
+    public void beforeRemove(T entity) {
+
+    }
+
+    public void afterRemove(T entity) {
+    }
+
+}
