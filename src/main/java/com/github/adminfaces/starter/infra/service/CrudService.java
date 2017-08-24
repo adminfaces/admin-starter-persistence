@@ -173,21 +173,18 @@ public class CrudService<T extends BaseEntity, PK extends Serializable> extends 
     }
 
     public void beforeInsert(T entity) {
-
     }
 
     public void afterInsert(T entity) {
     }
 
     public void beforeUpdate(T entity) {
-
     }
 
     public void afterUpdate(T entity) {
     }
 
     public void beforeRemove(T entity) {
-
     }
 
     public void afterRemove(T entity) {

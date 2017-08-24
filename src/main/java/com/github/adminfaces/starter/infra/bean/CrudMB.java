@@ -101,7 +101,7 @@ public abstract class CrudMB<T extends BaseEntity> {
 
             @Override
             public T getRowData(String key) {
-               List<T> list = (List<T>) this.getWrappedData();
+                List<T> list = (List<T>) this.getWrappedData();
                 for (T t : list) {
                     if (key.equals(t.getId().toString())) {
                         return t;

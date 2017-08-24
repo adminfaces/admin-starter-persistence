@@ -95,7 +95,7 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
 
         if (criteria()
                 .eqIgnoreCase(Car_.name, car.getName())
-                .eq(Car_.id, car.getId())
+                .notEq(Car_.id, car.getId())
                 .select(Long.class, count(Car_.id))
                 .getSingleResult() > 0) {
 
