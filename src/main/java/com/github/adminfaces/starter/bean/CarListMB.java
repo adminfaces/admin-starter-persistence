@@ -1,24 +1,20 @@
 package com.github.adminfaces.starter.bean;
 
 import com.github.adminfaces.starter.infra.bean.CrudMB;
-import com.github.adminfaces.starter.infra.model.Filter;
 import com.github.adminfaces.starter.infra.service.CrudService;
 import com.github.adminfaces.starter.infra.service.Service;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.service.CarService;
 import com.github.adminfaces.template.exception.BusinessException;
 import org.omnifaces.cdi.ViewScoped;
-import org.primefaces.model.LazyDataModel;
-import org.primefaces.model.SortOrder;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
 
-import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
+import static com.github.adminfaces.starter.infra.util.Messages.addDetailMessage;
+
 
 /**
  * Created by rmpestano on 12/02/17.
@@ -33,9 +29,6 @@ public class CarListMB extends CrudMB<Car, Integer> implements Serializable {
     @Inject
     @Service
     CrudService<Car, Integer> crudService; //generic injection
-
-    Integer id;
-
 
     @Inject
     public void initService() {
@@ -65,12 +58,4 @@ public class CarListMB extends CrudMB<Car, Integer> implements Serializable {
         addDetailMessage(numCars + " cars deleted successfully!");
     }
 
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

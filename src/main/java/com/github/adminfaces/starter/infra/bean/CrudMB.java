@@ -17,6 +17,7 @@ import java.lang.reflect.ParameterizedType;
 import java.util.List;
 import java.util.Map;
 
+import static com.github.adminfaces.starter.infra.util.Messages.addDetailMessage;
 import static com.github.adminfaces.template.util.Assert.has;
 
 public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
@@ -41,6 +42,12 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
 
     @Inject
     protected SessionFilter sessionFilter; //save filters in session
+
+    private String createMessage;
+
+    private String removeMessage;
+
+    private String updateMessage;
 
     @PostConstruct
     public void initCrudMB() {
@@ -121,20 +128,13 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
         return filter;
     }
 
-    public boolean isNew() {
-        return entity == null || entity.getId() == null;
-    }
-
-    public void clear() {
-        if(keepFiltersInSession()) {
-            sessionFilter.clear(getClass());
-        }
-        filter = initFilter();
-        entity = initEntity();
-    }
 
     protected T initEntity() {
         return createDefaultEntity();
+    }
+
+    public boolean isNew() {
+        return entity == null || entity.getId() == null;
     }
 
     public T createDefaultEntity() {
@@ -222,4 +222,83 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
     public void setId(PK id) {
         this.id = id;
     }
+
+    public String getCreateMessage() {
+        if (createMessage == null) {
+            createMessage = "Record created successfully";
+        }
+        return createMessage;
+    }
+
+    public String getRemoveMessage() {
+        if (removeMessage == null) {
+            removeMessage = "Record removed successfully";
+        }
+        return removeMessage;
+    }
+
+
+    public String getUpdateMessage() {
+        if (updateMessage == null) {
+            updateMessage = "Record updated successfully";
+        }
+        return updateMessage;
+    }
+
+    // actions
+
+    public void save() {
+        if (isNew()) {
+            beforeInsert();
+            crudService.insert(entity);
+            afterInsert();
+            addDetailMessage(getCreateMessage());
+        } else {
+            beforeUpdate();
+            crudService.update(entity);
+            afterUpdate();
+            addDetailMessage(getUpdateMessage());
+        }
+    }
+
+    public void remove() {
+        beforeRemove();
+        crudService.remove(entity);
+        afterRemove();
+        addDetailMessage(getRemoveMessage());
+    }
+
+    public void clear() {
+        if (keepFiltersInSession()) {
+            sessionFilter.clear(getClass());
+        }
+        filter = initFilter();
+        entity = initEntity();
+        id = null;
+    }
+
+    public void beforeRemove() {
+
+    }
+
+    public void afterRemove() {
+
+    }
+
+    public void beforeInsert() {
+
+    }
+
+    public void afterInsert() {
+
+    }
+
+    public void beforeUpdate() {
+
+    }
+
+    public void afterUpdate() {
+
+    }
+
 }

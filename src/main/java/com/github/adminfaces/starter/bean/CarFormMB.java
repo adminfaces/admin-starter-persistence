@@ -15,9 +15,6 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 
-import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
-import static com.github.adminfaces.template.util.Assert.has;
-
 /**
  * @author rmpestano
  */
@@ -33,31 +30,29 @@ public class CarFormMB extends CrudMB<Car, Integer> implements Serializable {
         super.setCrudService(carService);
     }
 
-    public void remove() throws IOException {
-        if (has(entity) && has(entity.getId())) {
-            carService.remove(entity);
-            addDetailMessage("Car " + entity.getModel()
-                    + " removed successfully");
-            Faces.getFlash().setKeepMessages(true);
+    public void afterRemove() {
+        Faces.getFlash().setKeepMessages(true);
+        try {
             Faces.redirect("car-list.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
-    public void save() {
-        String msg;
-        if (entity.getId() == null) {
-            carService.insert(entity);
-            msg = "Car " + entity.getModel() + " created successfully";
-        } else {
-            carService.update(entity);
-            msg = "Car " + entity.getModel() + " updated successfully";
-        }
-        addDetailMessage(msg);
+    @Override
+    public String getRemoveMessage() {
+        return "Car " + entity.getModel()
+                + " removed successfully";
     }
 
-    public void clear() {
-        entity = new Car();
-        id = null;
+    @Override
+    public String getCreateMessage() {
+        return "Car " + entity.getModel() + " created successfully";
+    }
+
+    @Override
+    public String getUpdateMessage() {
+        return "Car " + entity.getModel() + " updated successfully";
     }
 
 }

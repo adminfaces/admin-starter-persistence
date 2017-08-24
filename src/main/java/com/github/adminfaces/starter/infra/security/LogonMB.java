@@ -5,12 +5,12 @@ import org.omnifaces.util.Faces;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Specializes;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 
-import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
+import static com.github.adminfaces.starter.infra.util.Messages.addDetailMessage;
+
 
 /**
  * Created by rmpestano on 12/20/14.

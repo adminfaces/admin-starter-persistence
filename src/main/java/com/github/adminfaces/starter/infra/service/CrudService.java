@@ -92,11 +92,11 @@ public class CrudService<T extends BaseEntity, PK extends Serializable> extends 
 
     public void insert(T entity) {
         if (entity == null) {
-            throw new BusinessException("Entity cannot be null");
+            throw new BusinessException("Record cannot be null");
         }
 
         if (entity.getId() != null) {
-            throw new BusinessException("Entity must be transient");
+            throw new BusinessException("Record must be transient");
         }
         beforeInsert(entity);
         entityManager.persist(entity);
@@ -105,11 +105,11 @@ public class CrudService<T extends BaseEntity, PK extends Serializable> extends 
 
     public void remove(T entity) {
         if (entity == null) {
-            throw new BusinessException("Entity cannot be null");
+            throw new BusinessException("Record cannot be null");
         }
 
         if (entity.getId() == null) {
-            throw new BusinessException("Entity cannot be transient");
+            throw new BusinessException("Record cannot be transient");
         }
         beforeRemove(entity);
         entityManager.remove(entityManager.find(entityClass, entity.getId()));
@@ -128,11 +128,11 @@ public class CrudService<T extends BaseEntity, PK extends Serializable> extends 
 
     public void update(T entity) {
         if (entity == null) {
-            throw new BusinessException("Entity cannot be null");
+            throw new BusinessException("Record cannot be null");
         }
 
         if (entity.getId() == null) {
-            throw new BusinessException("Entity cannot be transient");
+            throw new BusinessException("Record cannot be transient");
         }
         beforeUpdate(entity);
         entityManager.merge(entity);
@@ -149,7 +149,7 @@ public class CrudService<T extends BaseEntity, PK extends Serializable> extends 
     public T findById(PK id) {
         T entity = entityManager.find(entityClass, id);
         if (entity == null) {
-            throw new BusinessException("Entity not found with id " + id);
+            throw new BusinessException(String.format("Record with id %s not found.", id));
         }
         return entity;
     }
