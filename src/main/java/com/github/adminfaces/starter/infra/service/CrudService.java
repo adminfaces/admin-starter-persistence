@@ -37,7 +37,7 @@ public class CrudService<T extends BaseEntity, ID extends Serializable> extends 
     public void CrudService(InjectionPoint ip) {
         if (ip != null && ip.getType() != null) {
             try {
-                //will work for @Inject CrudService<Entity,Key>
+                //will work for @Inject @Service CrudService<Entity,Key>
                 resolveEntity(ip);
             } catch (Exception e) {
             }
