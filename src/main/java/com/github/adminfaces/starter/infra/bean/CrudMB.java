@@ -3,6 +3,7 @@ package com.github.adminfaces.starter.infra.bean;
 import com.github.adminfaces.starter.infra.model.BaseEntity;
 import com.github.adminfaces.starter.infra.model.Filter;
 import com.github.adminfaces.starter.infra.service.CrudService;
+import com.github.adminfaces.starter.infra.util.Messages;
 import com.github.adminfaces.starter.infra.util.SessionFilter;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
@@ -42,6 +43,9 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
 
     @Inject
     protected SessionFilter sessionFilter; //save filters in session
+
+    @Inject
+    protected Messages messages;
 
     private String createMessage;
 
