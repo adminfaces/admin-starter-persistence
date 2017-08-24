@@ -15,7 +15,6 @@ import java.util.Map;
  * A map of {@link com.github.adminfaces.starter.infra.model.Filter} to Keep in session for each CrudMB
  */
 @SessionScoped
-@SuppressWarnings({"rawtypes", "unchecked"})
 public class SessionFilter implements Serializable {
 
     private static final long serialVersionUID = 1L;
