@@ -50,24 +50,16 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
             LOG.error("You need to initialize CrudService on your Managed Bean and call setCrudService(yourService) or override getCrudService()");
             throw new RuntimeException("You need to initialize CrudService on your Managed Bean and call setCrudService(yourService) or override getCrudService()");
         }
-        try {
-            entity = createDefaultEntity();
-            if (keepFiltersInSession()) {
-                filter = (Filter<T>) sessionFilter.get(getClass());
-                if (filter == null) {
-                    filter = createDefaultFilters();
-                    sessionFilter.add(getClass(),filter);
-                }
-            } else {
-                filter = createDefaultFilters();
-            }
 
-        } catch (InstantiationException | IllegalAccessException e) {
-            LOG.error(String.format("Could not create entity class for bean %s", getClass().getName()), e);
-            throw new RuntimeException(e);
-        }
+        entity = initEntity();
 
-        list = new LazyDataModel<T>() {
+        filter = initFilter();
+
+        list = initList();
+    }
+
+    protected LazyDataModel<T> initList() {
+        return new LazyDataModel<T>() {
 
             @Override
             public List<T> load(int first, int pageSize,
@@ -79,6 +71,11 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
                             : sortOrder.equals(SortOrder.DESCENDING) ? com.github.adminfaces.starter.infra.model.SortOrder.DESCENDING
                             : com.github.adminfaces.starter.infra.model.SortOrder.UNSORTED;
                 }
+
+                if (filters == null || filters.isEmpty() && keepFiltersInSession()) {
+                    filters = filter.getParams();
+                }
+
                 filter.setFirst(first).setPageSize(pageSize)
                         .setSortField(sortField).setSortOrder(order)
                         .setParams(filters);
@@ -99,26 +96,64 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
         };
     }
 
+
     //called view preRenderView or viewAction
     public void init() {
-        if(Faces.isAjaxRequest()){
-           return;
+        if (Faces.isAjaxRequest()) {
+            return;
         }
         if (has(id)) {
             entity = crudService.findById(id);
         }
     }
 
+    protected Filter<T> initFilter() {
+        Filter<T> filter;
+        if (keepFiltersInSession()) {
+            filter = (Filter<T>) sessionFilter.get(getClass());
+            if (filter == null) {
+                filter = createDefaultFilters();
+                sessionFilter.add(getClass(), filter);
+            }
+        } else {
+            filter = createDefaultFilters();
+        }
+
+        return filter;
+    }
+
     public boolean isNew() {
         return entity == null || entity.getId() == null;
     }
 
-    public T createDefaultEntity() throws IllegalAccessException, InstantiationException {
-        return ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]).newInstance();
+    public void clear() {
+        if(keepFiltersInSession()) {
+            sessionFilter.clear(getClass());
+        }
+        filter = initFilter();
+        entity = initEntity();
     }
 
-    public Filter<T> createDefaultFilters() throws IllegalAccessException, InstantiationException {
-        return new Filter<>(((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]).newInstance());
+    protected T initEntity() {
+        return createDefaultEntity();
+    }
+
+    public T createDefaultEntity() {
+        try {
+            return ((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]).newInstance();
+        } catch (InstantiationException | IllegalAccessException e) {
+            LOG.error(String.format("Could not create entity class for bean %s", getClass().getName()), e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Filter<T> createDefaultFilters() {
+        try {
+            return new Filter<>(((Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0]).newInstance());
+        } catch (InstantiationException | IllegalAccessException e) {
+            LOG.error(String.format("Could not create filters for bean %s", getClass().getName()), e);
+            throw new RuntimeException(e);
+        }
     }
 
     public boolean keepFiltersInSession() {

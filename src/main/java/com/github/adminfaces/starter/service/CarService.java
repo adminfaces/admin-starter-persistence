@@ -68,7 +68,7 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
     public List<String> getModels(String query) {
         return criteria()
                 .select(String.class, attribute(Car_.model))
-                .likeIgnoreCase(Car_.model, query)
+                .likeIgnoreCase(Car_.model, "%"+query+"%")
                 .getResultList();
     }
 

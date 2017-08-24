@@ -11,6 +11,11 @@
                 text-align: right !important;
             }
 
+
+            th.ui-filter-column {
+                padding: 5px 2px!important;
+            }
+
         </style>
     </ui:define>
 
@@ -43,6 +48,10 @@
                         <p:commandButton value="View selected" update="@(.ui-dialog)" styleClass="btn-info"
                                          disabled="#{empty carListMB.selectionList or carListMB.selectionList.size() == 0}"
                                          oncomplete="PF('selectionList').show()" icon="fa fa-search"/>
+
+                         <p:spacer width="5"/>
+                        <p:commandButton value="Clear" update="@(.ui-dialog, .ui-datatable)" process="@form" action="#{carListMB.clear}"
+                                         icon="fa fa-search"/>
                     </div>
 
                     <p:splitButton value="New" action="car-form?faces-redirect=true"

@@ -144,7 +144,7 @@ public class CrudService<T extends BaseEntity, ID extends Serializable> extends 
     public T findById(Serializable id) {
         T entity = entityManager.find(entityClass, id);
         if (entity == null) {
-            new BusinessException("Entity not found with id " + id);
+            throw new BusinessException("Entity not found with id " + id);
         }
         return entity;
     }
