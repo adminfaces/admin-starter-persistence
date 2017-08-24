@@ -97,7 +97,7 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
     }
 
 
-    //called view preRenderView or viewAction
+    //called via preRenderView or viewAction
     public void init() {
         if (Faces.isAjaxRequest()) {
             return;
