@@ -23,11 +23,11 @@ import java.util.List;
  * Utility service for crud
  */
 @Service
-public class CrudService<T extends BaseEntity, ID extends Serializable> extends CriteriaSupportHandler<T> implements CriteriaSupport<T>, Serializable {
+public class CrudService<T extends BaseEntity, PK extends Serializable> extends CriteriaSupportHandler<T> implements CriteriaSupport<T>, Serializable {
 
     protected Class<T> entityClass;
 
-    protected Class<ID> entityKey;
+    protected Class<PK> entityKey;
 
     @Inject
     protected EntityManager entityManager;
@@ -46,7 +46,7 @@ public class CrudService<T extends BaseEntity, ID extends Serializable> extends 
         if (entityClass == null) {
             //will work for service inheritance MyService extends CrudService<Entity, Key>
             entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-            entityKey = (Class<ID>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+            entityKey = (Class<PK>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
 
         }
     }
@@ -55,7 +55,7 @@ public class CrudService<T extends BaseEntity, ID extends Serializable> extends 
         ParameterizedType type = (ParameterizedType) ip.getType();
         Type[] typeArgs = type.getActualTypeArguments();
         entityClass = (Class<T>) typeArgs[0];
-        entityKey = (Class<ID>) typeArgs[1];
+        entityKey = (Class<PK>) typeArgs[1];
     }
 
     public List<T> paginate(Filter<T> filter) {
@@ -80,6 +80,11 @@ public class CrudService<T extends BaseEntity, ID extends Serializable> extends 
                 .getResultList();
     }
 
+    /**
+     * Called before pagination, should be overriden. By default there is no restrictions.
+     * @param filter used to create restrictions
+     * @return a criteria with configured restrictions
+     */
     protected Criteria<T, T> configRestrictions(Filter<T> filter) {
         return criteria();
     }
@@ -135,13 +140,13 @@ public class CrudService<T extends BaseEntity, ID extends Serializable> extends 
     }
 
     public long count(Filter<T> filter) {
-        SingularAttribute<? super T, ID> id = entityManager.getMetamodel().entity(entityClass).getId(entityKey);
+        SingularAttribute<? super T, PK> id = entityManager.getMetamodel().entity(entityClass).getId(entityKey);
         return configRestrictions(filter)
                 .select(Long.class, count(id))
                 .getSingleResult();
     }
 
-    public T findById(Serializable id) {
+    public T findById(PK id) {
         T entity = entityManager.find(entityClass, id);
         if (entity == null) {
             throw new BusinessException("Entity not found with id " + id);

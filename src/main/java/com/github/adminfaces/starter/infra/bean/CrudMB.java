@@ -4,7 +4,6 @@ import com.github.adminfaces.starter.infra.model.BaseEntity;
 import com.github.adminfaces.starter.infra.model.Filter;
 import com.github.adminfaces.starter.infra.service.CrudService;
 import com.github.adminfaces.starter.infra.util.SessionFilter;
-import com.github.adminfaces.starter.model.Car;
 import org.omnifaces.util.Faces;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
@@ -24,7 +23,7 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
 
     protected final Logger LOG = LoggerFactory.getLogger(getClass().getName());
 
-    private CrudService<T, ?> crudService;
+    private CrudService<T, PK> crudService;
 
     protected T entity;
 
@@ -160,7 +159,7 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
         return true;
     }
 
-    public void setCrudService(CrudService<T, ?> crudService) {
+    public void setCrudService(CrudService<T, PK> crudService) {
         this.crudService = crudService;
     }
 
