@@ -21,15 +21,15 @@ import java.util.Map;
 import static com.github.adminfaces.starter.infra.util.Messages.addDetailMessage;
 import static com.github.adminfaces.template.util.Assert.has;
 
-public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
+public abstract class CrudMB<T extends BaseEntity> {
 
     protected final Logger LOG = LoggerFactory.getLogger(getClass().getName());
 
-    private CrudService<T, PK> crudService;
+    private CrudService<T, ?> crudService;
 
     protected T entity;
 
-    protected PK id;
+    protected Serializable id;
 
     protected Filter<T> filter;
 
@@ -101,7 +101,13 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
 
             @Override
             public T getRowData(String key) {
-                return crudService.findById((PK) key);
+               List<T> list = (List<T>) this.getWrappedData();
+                for (T t : list) {
+                    if (key.equals(t.getId().toString())) {
+                        return t;
+                    }
+                }
+                return null;
             }
         };
     }
@@ -163,7 +169,7 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
         return true;
     }
 
-    public void setCrudService(CrudService<T, PK> crudService) {
+    public void setCrudService(CrudService<T, ?> crudService) {
         this.crudService = crudService;
     }
 
@@ -219,11 +225,11 @@ public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
         return crudService;
     }
 
-    public PK getId() {
+    public Serializable getId() {
         return id;
     }
 
-    public void setId(PK id) {
+    public void setId(Serializable id) {
         this.id = id;
     }
 

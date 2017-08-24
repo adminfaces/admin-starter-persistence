@@ -20,7 +20,7 @@ import java.io.Serializable;
  */
 @Named
 @ViewScoped
-public class CarFormMB extends CrudMB<Car, Integer> implements Serializable {
+public class CarFormMB extends CrudMB<Car> implements Serializable {
 
     @Inject
     CarService carService;

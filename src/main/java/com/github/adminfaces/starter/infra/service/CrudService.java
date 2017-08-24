@@ -146,7 +146,7 @@ public class CrudService<T extends BaseEntity, PK extends Serializable> extends 
                 .getSingleResult();
     }
 
-    public T findById(PK id) {
+    public T findById(Serializable id) {
         T entity = entityManager.find(entityClass, id);
         if (entity == null) {
             throw new BusinessException(String.format("Record with id %s not found.", id));
@@ -154,6 +154,9 @@ public class CrudService<T extends BaseEntity, PK extends Serializable> extends 
         return entity;
     }
 
+    public Class<PK> getEntityKey() {
+        return entityKey;
+    }
 
     @Override
     public Class<T> getEntityClass() {
