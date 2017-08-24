@@ -5,7 +5,7 @@
 package com.github.adminfaces.starter.service;
 
 import com.github.adminfaces.starter.infra.model.Filter;
-import com.github.adminfaces.starter.infra.persistence.CrudService;
+import com.github.adminfaces.starter.infra.service.CrudService;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.model.Car_;
 import com.github.adminfaces.template.exception.BusinessException;
@@ -24,56 +24,59 @@ import static com.github.adminfaces.template.util.Assert.has;
 public class CarService extends CrudService<Car, Integer> implements Serializable {
 
 
+    protected Criteria<Car, Car> configRestrictions(Filter<Car> filter) {
 
-    public List<Car> listByModel(String model) {
-         return criteria()
-                .eqIgnoreCase(Car_.model,model)
-                 .getResultList();
-    }
-
-    protected Criteria<Car,Car> configRestrictions(Filter<Car> filter) {
-
-        Criteria<Car,Car> criteria = criteria();
+        Criteria<Car, Car> criteria = criteria();
 
         //create restrictions based on parameters map
         if (filter.hasParam("id")) {
-            criteria.eq(Car_.id,filter.getIntParam("id"));
+            criteria.eq(Car_.id, filter.getIntParam("id"));
         }
 
         if (filter.hasParam("minPrice") && filter.hasParam("maxPrice")) {
-            criteria.between(Car_.price,filter.getDoubleParam("minPrice"),filter.getDoubleParam("maxPrice"));
+            criteria.between(Car_.price, filter.getDoubleParam("minPrice"), filter.getDoubleParam("maxPrice"));
         } else if (filter.hasParam("minPrice")) {
-            criteria.gtOrEq(Car_.price,filter.getDoubleParam("minPrice"));
+            criteria.gtOrEq(Car_.price, filter.getDoubleParam("minPrice"));
         } else if (filter.hasParam("maxPrice")) {
-            criteria.ltOrEq(Car_.price,filter.getDoubleParam("maxPrice"));
+            criteria.ltOrEq(Car_.price, filter.getDoubleParam("maxPrice"));
         }
 
         //create restrictions based on filter entity
         if (has(filter.getEntity())) {
             Car filterEntity = filter.getEntity();
             if (has(filterEntity.getModel())) {
-                criteria.likeIgnoreCase(Car_.model,filterEntity.getModel());
+                criteria.likeIgnoreCase(Car_.model, filterEntity.getModel());
             }
 
             if (has(filterEntity.getPrice())) {
-                criteria.eq(Car_.price,filterEntity.getPrice());
+                criteria.eq(Car_.price, filterEntity.getPrice());
             }
 
             if (has(filterEntity.getName())) {
-                criteria.likeIgnoreCase(Car_.name,filterEntity.getName());
+                criteria.likeIgnoreCase(Car_.name, filterEntity.getName());
             }
         }
         return criteria;
     }
 
+    public List<Car> listByModel(String model) {
+        return criteria()
+                .eqIgnoreCase(Car_.model, model)
+                .getResultList();
+    }
+
     public List<String> getModels(String query) {
         return criteria()
                 .select(String.class, attribute(Car_.model))
-                .likeIgnoreCase(Car_.model,query)
+                .likeIgnoreCase(Car_.model, query)
                 .getResultList();
     }
 
     public void beforeInsert(Car car) {
+        validate(car);
+    }
+
+    public void beforeUpdate(Car car) {
         validate(car);
     }
 
@@ -83,7 +86,7 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
             be.addException(new BusinessException("Car model cannot be empty"));
         }
         if (!car.hasName()) {
-           be.addException(new BusinessException("Car name cannot be empty"));
+            be.addException(new BusinessException("Car name cannot be empty"));
         }
 
         if (!has(car.getPrice())) {
@@ -91,21 +94,16 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
         }
 
         if (criteria()
-                .eqIgnoreCase(Car_.name,car.getName())
-                .eq(Car_.id,car.getId())
-                .select(Long.class,count(Car_.id))
+                .eqIgnoreCase(Car_.name, car.getName())
+                .eq(Car_.id, car.getId())
+                .select(Long.class, count(Car_.id))
                 .getSingleResult() > 0) {
 
             be.addException(new BusinessException("Car name must be unique"));
         }
 
-        if(has(be.getExceptionList())) {
+        if (has(be.getExceptionList())) {
             throw be;
         }
-    }
-
-
-    public void beforeUpdate(Car car) {
-        validate(car);
     }
 }

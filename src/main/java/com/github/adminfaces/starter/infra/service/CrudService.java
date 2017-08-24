@@ -1,4 +1,4 @@
-package com.github.adminfaces.starter.infra.persistence;
+package com.github.adminfaces.starter.infra.service;
 
 import com.github.adminfaces.starter.infra.model.BaseEntity;
 import com.github.adminfaces.starter.infra.model.Filter;
@@ -22,11 +22,12 @@ import java.util.List;
  *
  * Utility service for crud
  */
-public abstract class CrudService<T extends BaseEntity, K extends Serializable> extends CriteriaSupportHandler<T> implements CriteriaSupport<T> {
+@Service
+public class CrudService<T extends BaseEntity, ID extends Serializable> extends CriteriaSupportHandler<T> implements CriteriaSupport<T>, Serializable {
 
     protected Class<T> entityClass;
 
-    protected Class<K> entityKey;
+    protected Class<ID> entityKey;
 
     @Inject
     protected EntityManager entityManager;
@@ -45,7 +46,7 @@ public abstract class CrudService<T extends BaseEntity, K extends Serializable> 
         if (entityClass == null) {
             //will work for service inheritance MyService extends CrudService<Entity, Key>
             entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
-            entityKey = (Class<K>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
+            entityKey = (Class<ID>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
 
         }
     }
@@ -54,7 +55,7 @@ public abstract class CrudService<T extends BaseEntity, K extends Serializable> 
         ParameterizedType type = (ParameterizedType) ip.getType();
         Type[] typeArgs = type.getActualTypeArguments();
         entityClass = (Class<T>) typeArgs[0];
-        entityKey = (Class<K>) typeArgs[1];
+        entityKey = (Class<ID>) typeArgs[1];
     }
 
     public List<T> paginate(Filter<T> filter) {
@@ -79,7 +80,9 @@ public abstract class CrudService<T extends BaseEntity, K extends Serializable> 
                 .getResultList();
     }
 
-    protected abstract Criteria<T, T> configRestrictions(Filter<T> filter);
+    protected Criteria<T, T> configRestrictions(Filter<T> filter) {
+        return criteria();
+    }
 
 
     public void insert(T entity) {
@@ -132,13 +135,13 @@ public abstract class CrudService<T extends BaseEntity, K extends Serializable> 
     }
 
     public long count(Filter<T> filter) {
-        SingularAttribute<? super T, K> id = entityManager.getMetamodel().entity(entityClass).getId(entityKey);
+        SingularAttribute<? super T, ID> id = entityManager.getMetamodel().entity(entityClass).getId(entityKey);
         return configRestrictions(filter)
                 .select(Long.class, count(id))
                 .getSingleResult();
     }
 
-    public T findById(Integer id) {
+    public T findById(Serializable id) {
         T entity = entityManager.find(entityClass, id);
         if (entity == null) {
             new BusinessException("Entity not found with id " + id);
@@ -155,6 +158,10 @@ public abstract class CrudService<T extends BaseEntity, K extends Serializable> 
     @Override
     public EntityManager getEntityManager() {
         return entityManager;
+    }
+
+    public void setEntityManager(EntityManager entityManager) {
+        this.entityManager = entityManager;
     }
 
     public void beforeInsert(T entity) {

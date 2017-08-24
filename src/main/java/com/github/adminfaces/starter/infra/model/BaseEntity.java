@@ -13,7 +13,7 @@ import java.io.Serializable;
 public abstract class BaseEntity implements Serializable {
 
 
-    public abstract <T extends Serializable> T getId();
+    public abstract <ID extends Serializable> ID getId();
 
     @Override
     public int hashCode() {

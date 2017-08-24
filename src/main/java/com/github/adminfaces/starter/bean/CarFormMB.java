@@ -4,6 +4,7 @@
  */
 package com.github.adminfaces.starter.bean;
 
+import com.github.adminfaces.starter.infra.bean.CrudMB;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.service.CarService;
 import org.omnifaces.cdi.ViewScoped;
@@ -22,48 +23,20 @@ import static com.github.adminfaces.template.util.Assert.has;
  */
 @Named
 @ViewScoped
-public class CarFormMB implements Serializable {
-
-
-    private Integer id;
-    private Car car;
-
+public class CarFormMB extends CrudMB<Car> implements Serializable {
 
     @Inject
     CarService carService;
 
-    public void init() {
-        if(Faces.isAjaxRequest()){
-           return;
-        }
-        if (has(id)) {
-            car = carService.findById(id);
-        } else {
-            car = new Car();
-        }
+    @Inject
+    public void setCrudService() {
+        super.setCrudService(carService);
     }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public Car getCar() {
-        return car;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
 
     public void remove() throws IOException {
-        if (has(car) && has(car.getId())) {
-            carService.remove(car);
-            addDetailMessage("Car " + car.getModel()
+        if (has(entity) && has(entity.getId())) {
+            carService.remove(entity);
+            addDetailMessage("Car " + entity.getModel()
                     + " removed successfully");
             Faces.getFlash().setKeepMessages(true);
             Faces.redirect("car-list.xhtml");
@@ -72,24 +45,19 @@ public class CarFormMB implements Serializable {
 
     public void save() {
         String msg;
-        if (car.getId() == null) {
-            carService.insert(car);
-            msg = "Car " + car.getModel() + " created successfully";
+        if (entity.getId() == null) {
+            carService.insert(entity);
+            msg = "Car " + entity.getModel() + " created successfully";
         } else {
-            carService.update(car);
-            msg = "Car " + car.getModel() + " updated successfully";
+            carService.update(entity);
+            msg = "Car " + entity.getModel() + " updated successfully";
         }
         addDetailMessage(msg);
     }
 
     public void clear() {
-        car = new Car();
+        entity = new Car();
         id = null;
     }
-
-    public boolean isNew() {
-        return car == null || car.getId() == null;
-    }
-
 
 }
