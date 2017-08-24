@@ -9,7 +9,7 @@ import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
 
-import static com.github.adminfaces.starter.infra.util.Messages.addDetailMessage;
+import static com.github.adminfaces.persistence.util.Messages.addDetailMessage;
 
 
 /**

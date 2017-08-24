@@ -4,7 +4,7 @@
  */
 package com.github.adminfaces.starter.bean;
 
-import com.github.adminfaces.starter.infra.bean.CrudMB;
+import com.github.adminfaces.persistence.bean.CrudMB;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.service.CarService;
 import org.omnifaces.cdi.ViewScoped;

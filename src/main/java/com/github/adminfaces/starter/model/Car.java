@@ -5,7 +5,8 @@
 package com.github.adminfaces.starter.model;
 
 
-import com.github.adminfaces.starter.infra.model.BaseEntity;
+
+import com.github.adminfaces.persistence.model.BaseEntity;
 
 import javax.persistence.*;
 

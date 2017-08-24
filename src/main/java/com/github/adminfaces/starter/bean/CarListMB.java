@@ -1,8 +1,8 @@
 package com.github.adminfaces.starter.bean;
 
-import com.github.adminfaces.starter.infra.bean.CrudMB;
-import com.github.adminfaces.starter.infra.service.CrudService;
-import com.github.adminfaces.starter.infra.service.Service;
+import com.github.adminfaces.persistence.bean.CrudMB;
+import com.github.adminfaces.persistence.service.CrudService;
+import com.github.adminfaces.persistence.service.Service;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.service.CarService;
 import com.github.adminfaces.template.exception.BusinessException;
@@ -13,7 +13,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
 
-import static com.github.adminfaces.starter.infra.util.Messages.addDetailMessage;
+import static com.github.adminfaces.persistence.util.Messages.addDetailMessage;
 
 
 /**

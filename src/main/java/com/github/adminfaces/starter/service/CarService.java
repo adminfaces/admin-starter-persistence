@@ -4,8 +4,6 @@
  */
 package com.github.adminfaces.starter.service;
 
-import com.github.adminfaces.starter.infra.model.Filter;
-import com.github.adminfaces.starter.infra.service.CrudService;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.model.Car_;
 import com.github.adminfaces.template.exception.BusinessException;
@@ -15,6 +13,8 @@ import javax.ejb.Stateless;
 import java.io.Serializable;
 import java.util.List;
 
+import com.github.adminfaces.persistence.model.Filter;
+import com.github.adminfaces.persistence.service.CrudService;
 import static com.github.adminfaces.template.util.Assert.has;
 
 /**
@@ -23,6 +23,13 @@ import static com.github.adminfaces.template.util.Assert.has;
 @Stateless
 public class CarService extends CrudService<Car, Integer> implements Serializable {
 
+
+    public List<String> getModels(String query) {
+        return criteria()
+                .select(String.class, attribute(Car_.model))
+                .likeIgnoreCase(Car_.model, "%"+query+"%")
+                .getResultList();
+    }
 
     protected Criteria<Car, Car> configRestrictions(Filter<Car> filter) {
 
@@ -65,12 +72,7 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
                 .getResultList();
     }
 
-    public List<String> getModels(String query) {
-        return criteria()
-                .select(String.class, attribute(Car_.model))
-                .likeIgnoreCase(Car_.model, "%"+query+"%")
-                .getResultList();
-    }
+
 
     public void beforeInsert(Car car) {
         validate(car);
