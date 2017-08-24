@@ -20,7 +20,7 @@ import java.util.Map;
 
 import static com.github.adminfaces.template.util.Assert.has;
 
-public abstract class CrudMB<T extends BaseEntity> {
+public abstract class CrudMB<T extends BaseEntity, PK extends Serializable> {
 
     protected final Logger LOG = LoggerFactory.getLogger(getClass().getName());
 
@@ -28,11 +28,11 @@ public abstract class CrudMB<T extends BaseEntity> {
 
     protected T entity;
 
-    protected Serializable id;
+    protected PK id;
 
     protected Filter<T> filter;
 
-    protected LazyDataModel<T> list;
+    protected LazyDataModel<T> list; //datatable pagination
 
     protected List<T> selectionList; //holds selected rows in datatable with multiple selection (checkbox column)
 
@@ -94,7 +94,7 @@ public abstract class CrudMB<T extends BaseEntity> {
 
             @Override
             public T getRowData(String key) {
-                return crudService.findById((Serializable) key);
+                return crudService.findById((PK) key);
             }
         };
     }
@@ -181,11 +181,11 @@ public abstract class CrudMB<T extends BaseEntity> {
         return crudService;
     }
 
-    public Serializable getId() {
+    public PK getId() {
         return id;
     }
 
-    public void setId(Serializable id) {
+    public void setId(PK id) {
         this.id = id;
     }
 }

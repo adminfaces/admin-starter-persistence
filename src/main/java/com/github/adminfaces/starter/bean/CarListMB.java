@@ -25,7 +25,7 @@ import static com.github.adminfaces.starter.util.Utils.addDetailMessage;
  */
 @Named
 @ViewScoped
-public class CarListMB extends CrudMB<Car> implements Serializable {
+public class CarListMB extends CrudMB<Car, Integer> implements Serializable {
 
     @Inject
     CarService carService;

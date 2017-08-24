@@ -23,7 +23,7 @@ import static com.github.adminfaces.template.util.Assert.has;
  */
 @Named
 @ViewScoped
-public class CarFormMB extends CrudMB<Car> implements Serializable {
+public class CarFormMB extends CrudMB<Car, Integer> implements Serializable {
 
     @Inject
     CarService carService;
