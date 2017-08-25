@@ -52,7 +52,7 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
         if (has(filter.getEntity())) {
             Car filterEntity = filter.getEntity();
             if (has(filterEntity.getModel())) {
-                criteria.likeIgnoreCase(Car_.model, filterEntity.getModel());
+                criteria.likeIgnoreCase(Car_.model, "%"+filterEntity.getModel());
             }
 
             if (has(filterEntity.getPrice())) {
@@ -60,7 +60,7 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
             }
 
             if (has(filterEntity.getName())) {
-                criteria.likeIgnoreCase(Car_.name, filterEntity.getName());
+                criteria.likeIgnoreCase(Car_.name, "%"+filterEntity.getName());
             }
         }
         return criteria;
