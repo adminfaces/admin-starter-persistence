@@ -17,11 +17,9 @@ image:starter4.png[]
 
 == Running
 
+Run `mvn clean package` and deploy on any JavaEE 6 or greater application server.
 
-
-It should run in any JavaEE 6 or greater application server.
-
-You can also run via wildfly-swarm with command `mvn wildfly-swarm:run -Pswarm`.
+You can also run via http://wildfly-swarm.io/[wildfly-swarm^] with command `mvn wildfly-swarm:run -Pswarm`.
 
 Or using docker:
 
