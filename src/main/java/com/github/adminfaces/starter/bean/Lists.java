@@ -23,7 +23,7 @@ public class Lists implements Serializable {
 
     @Produces
     @Named("models")
-    public List<String> models () {
+    public List<String> models() {
         return crudService.criteria()
                 .select(String.class, crudService.attribute(Car_.model))
                 .getResultList();

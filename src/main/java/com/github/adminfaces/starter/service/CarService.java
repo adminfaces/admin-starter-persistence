@@ -64,7 +64,7 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
             }
 
             if (has(filterEntity.getName())) {
-                criteria.likeIgnoreCase(Car_.name, "%"+filterEntity.getName());
+                criteria.likeIgnoreCase(Car_.name, "%"+filterEntity.getName()+"%");
             }
         }
         return criteria;
