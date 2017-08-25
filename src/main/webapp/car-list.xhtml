@@ -15,6 +15,17 @@
                 padding: 5px 2px !important;
             }
 
+            #footer:hover {
+                opacity: .7;
+            }
+
+            #footer {
+                float:right;
+                font-size: 12px;
+                color:#3c8dbc;
+                font-weight: 500;
+            }
+
         </style>
     </ui:define>
 
@@ -64,8 +75,11 @@
                         </p:menuitem>
                         <p:menuitem value="Search" update="@(.ui-dialog)"
                                     oncomplete="PF('searchDialog').show()"
-                                    icon="fa fa-search"
-                        />
+                                    icon="fa fa-search"/>
+
+                        <p:menuitem value="Clear" update="@(.ui-dialog, .ui-datatable)" process="@form"
+                                    action="#{carListMB.clear}"
+                                    icon="fa fa-refresh"/>
                     </p:splitButton>
 
                     <p:separator/>
@@ -129,6 +143,11 @@
                             </f:facet>
                             #{c.price}
                         </p:column>
+                        <f:facet name="footer">
+                            <div id="footer">
+                                Search criteria <i class="fa fa-filter"/>
+                            </div>
+                        </f:facet>
                     </p:dataTable>
                 </div>
             </div>
@@ -141,15 +160,15 @@
         </h:form>
 
 
-        <p:dialog header="Search cars" widgetVar="searchDialog" height="400" modal="true"
+        <p:dialog header="Search cars" widgetVar="searchDialog" height="400" modal="true" appendTo="@(body)"
                   width="500" responsive="true" styleClass="box-success">
 
             <h:form>
-                <p:commandButton value="OK" update="@form @(.ui-datatable)" icon="fa fa-check"
+                <p:commandButton value="OK" update="@form @(.ui-datatable, .ui-tooltip)" icon="fa fa-check"
                                  ignoreAutoUpdate="true" styleClass="btn-primary"/>
                 <p:spacer height="5"/>
                 <p:commandButton value="Clear" action="#{carListMB.clear}" process="@this"
-                                 update="@form @(.ui-datatable)" styleClass="btn-success" icon="fa fa-refresh"/>
+                                 update="@form @(.ui-datatable, .ui-tooltip)" styleClass="btn-success" icon="fa fa-refresh"/>
                 <p:spacer height="5"/>
                 <p:commandButton value="Close" icon="fa fa-close" oncomplete="PF('searchDialog').hide()"/>
                 <p:separator/>
@@ -192,6 +211,11 @@
                 </div>
             </h:form>
         </p:dialog>
+
+        <p:tooltip for="@(div[id$=footer])" escape="false" position="top"
+                       showEvent="mouseover" hideEvent="mouseleave"
+                       value="#{carListMB.searchCriteria}"/>
+
 
     </ui:define>
 
