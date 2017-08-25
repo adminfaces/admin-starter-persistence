@@ -10,11 +10,15 @@ import com.github.adminfaces.template.exception.BusinessException;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 
 import javax.ejb.Stateless;
+import javax.persistence.metamodel.SingularAttribute;
 import java.io.Serializable;
 import java.util.List;
 
 import com.github.adminfaces.persistence.model.Filter;
 import com.github.adminfaces.persistence.service.CrudService;
+import org.apache.deltaspike.data.api.criteria.QuerySelection;
+import org.apache.deltaspike.data.impl.criteria.selection.AttributeQuerySelection;
+
 import static com.github.adminfaces.template.util.Assert.has;
 
 /**
@@ -108,4 +112,6 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
             throw be;
         }
     }
+
+
 }

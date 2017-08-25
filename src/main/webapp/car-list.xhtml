@@ -11,9 +11,8 @@
                 text-align: right !important;
             }
 
-
             th.ui-filter-column {
-                padding: 5px 2px!important;
+                padding: 5px 2px !important;
             }
 
         </style>
@@ -45,12 +44,12 @@
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
                         </p:commandButton>
                         <p:spacer width="5"/>
-                        <p:commandButton value="View selected" update="@(.ui-dialog)" styleClass="btn-info"
-                                         disabled="#{empty carListMB.selectionList or carListMB.selectionList.size() == 0}"
-                                         oncomplete="PF('selectionList').show()" icon="fa fa-search"/>
+                        <p:commandButton value="Search" update="@(.ui-dialog)" styleClass="btn-info"
+                                         oncomplete="PF('searchDialog').show()" icon="fa fa-search"/>
 
-                         <p:spacer width="5"/>
-                        <p:commandButton value="Clear" update="@(.ui-dialog, .ui-datatable)" process="@form" action="#{carListMB.clear}"
+                        <p:spacer width="5"/>
+                        <p:commandButton value="Clear" update="@(.ui-dialog, .ui-datatable)" process="@form"
+                                         action="#{carListMB.clear}"
                                          icon="fa fa-refresh"/>
                     </div>
 
@@ -63,9 +62,8 @@
                                     icon="fa fa-trash">
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
                         </p:menuitem>
-                        <p:menuitem value="View selected" update="@(.ui-dialog)"
-                                    oncomplete="PF('selectionList').show()"
-                                    disabled="#{empty carListMB.selectionList or carListMB.selectionList.size() == 0}"
+                        <p:menuitem value="Search" update="@(.ui-dialog)"
+                                    oncomplete="PF('searchDialog').show()"
                                     icon="fa fa-search"
                         />
                     </p:splitButton>
@@ -78,7 +76,7 @@
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
                                  currentPageReportTemplate="[ {startRecord} to {endRecord} of {totalRecords} ]"
                                  rowsPerPageTemplate="5,10,15,20,30"
-                            >
+                    >
 
                         <p:ajax event="rowSelectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
                         <p:ajax event="rowUnselectCheckbox" update="@(.ui-button, .ui-confirm-dialog)"/>
@@ -109,7 +107,7 @@
                                             oncomplete="PF('carsTable').filter()"/>
                                 </p:autoComplete>
                             </f:facet>
-                             <p:link value="#{c.model}" outcome="car-form.xhtml" >
+                            <p:link value="#{c.model}" outcome="car-form.xhtml">
                                 <f:param name="id" value="#{c.id}"/>
                             </p:link>
 
@@ -143,13 +141,56 @@
         </h:form>
 
 
+        <p:dialog header="Search cars" widgetVar="searchDialog" height="400" modal="true"
+                  width="500" responsive="true" styleClass="box-success">
 
-        <p:dialog header="Selected cars" widgetVar="selectionList" height="250"
-                  width="400" responsive="true" styleClass="box-success">
-            <p:dataList id="selectionListList" value="#{carListMB.selectionList}" var="car"
-                        type="definition">
-                ID: #{car.id} - Name: #{car.name} - Model: #{car.model}
-            </p:dataList>
+            <h:form>
+                <p:commandButton value="OK" update="@form @(.ui-datatable)" icon="fa fa-check"
+                                 ignoreAutoUpdate="true" styleClass="btn-primary"/>
+                <p:spacer height="5"/>
+                <p:commandButton value="Clear" action="#{carListMB.clear}" process="@this"
+                                 update="@form @(.ui-datatable)" styleClass="btn-success" icon="fa fa-refresh"/>
+                <p:spacer height="5"/>
+                <p:commandButton value="Close" icon="fa fa-close" oncomplete="PF('searchDialog').hide()"/>
+                <p:separator/>
+
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12">
+                        <p:outputLabel for="model" value="#{msg['label.model']}"/>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:selectOneMenu id="model" value="#{carListMB.filter.entity.model}">
+                            <f:selectItem itemLabel="Chose a model" itemValue=""/>
+                            <f:selectItems value="#{models}" var="m" itemLabel="#{m}"
+                                           itemValue="#{m}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:outputLabel for="name" value="#{msg['label.name']}"/>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:inputText id="name" value="#{carListMB.filter.entity.name}"/>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12 ui-g-nopad">
+                        <div class="ui-g-12">
+                            <p:outputLabel for="min" value="#{msg['label.minPrice']}"/>
+                        </div>
+                        <div class="ui-g-12">
+                            <p:inputNumber id="min" value="#{carListMB.filter.params.minPrice}"/>
+                        </div>
+                    </div>
+
+                    <div class="ui-g-6 ui-sm-12 ui-g-nopad">
+                        <div class="ui-g-12">
+                            <p:outputLabel for="max" value="#{msg['label.maxPrice']}"/>
+                        </div>
+                        <div class="ui-g-12">
+                            <p:inputNumber id="max" value="#{carListMB.filter.params.maxPrice}"/>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
         </p:dialog>
 
     </ui:define>
