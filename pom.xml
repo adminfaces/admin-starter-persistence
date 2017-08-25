@@ -13,6 +13,8 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.hibernate>5.1.8.Final</version.hibernate>
         <version.deltaspike>1.8.0</version.deltaspike>
+        <arquillian.container>wildfly:8.2.0.Final:managed</arquillian.container>
+        <arquillian.browser>chrome</arquillian.browser>
     </properties>
 
     <dependencies>
@@ -51,7 +53,7 @@
             <!--<classifier>dev</classifier> uncompressed theme.css (note that you need to exclude admin-theme brought by admin-template dependency)-->
         </dependency>
 
-         <dependency>
+        <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-persistence</artifactId>
             <version>1.0.0-RC4</version>
@@ -99,7 +101,68 @@
             <version>${version.deltaspike}</version>
             <scope>compile</scope>
         </dependency>
+
+        <!-- tests -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>3.6.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-junit</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-graphene</artifactId>
+            <scope>test</scope>
+            <type>pom</type>
+        </dependency>
+        <dependency>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-chameleon</artifactId>
+            <scope>test</scope>
+            <type>pom</type>
+        </dependency>
+
+        <!-- graphene webdriver requires it -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>21.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.jboss.arquillian.selenium</groupId>
+                <artifactId>selenium-bom</artifactId>
+                <version>3.4.0</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+            <dependency>
+                <groupId>org.arquillian</groupId>
+                <artifactId>arquillian-universe</artifactId>
+                <version>1.1.13.5</version>
+                <scope>import</scope>
+                <type>pom</type>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
     <build>
         <resources>
             <resource>
@@ -152,6 +215,15 @@
                         <version>4.3.8.Final</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Ft.java</include>
+                    </includes>
+                </configuration>
             </plugin>
         </plugins>
         <finalName>admin-starter</finalName>
