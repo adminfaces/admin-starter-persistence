@@ -1,7 +1,7 @@
 = AdminFaces Starter Persistence
 
 
-A simple project to get you started with https://github.com/adminfaces[AdminFaces^] using https://deltaspike.apache.org/documentation/data.html[DeltaSpike Data^] for utility persistence layer.
+A simple project to get you started with https://github.com/adminfaces[AdminFaces^] using https://github.com/adminfaces/admin-persistence[AdminPersistence^] for utility persistence layer.
 
 .Login page
 image:starter1.png[]
