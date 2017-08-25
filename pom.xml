@@ -54,7 +54,7 @@
          <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-persistence</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>1.0.0-RC1</version>
         </dependency>
 
         <!-- persistence -->
