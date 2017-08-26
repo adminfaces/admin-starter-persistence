@@ -22,4 +22,14 @@ public class CarListPage {
 
     @FindByJQuery("button[id$=btRemove]")
     private GrapheneElement btRemove;
+
+
+    @FindByJQuery("section.content-header h1")
+    private GrapheneElement header;
+
+
+
+    public boolean isPresent() {
+        return header.isPresent() && header.getText().contains("Car listing Find cars by name, price and model");
+    }
 }

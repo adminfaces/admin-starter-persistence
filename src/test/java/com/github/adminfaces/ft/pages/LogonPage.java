@@ -6,6 +6,7 @@ import org.jboss.arquillian.graphene.fragment.Root;
 import org.jboss.arquillian.graphene.page.Location;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
+import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
 @Location("login.xhtml")
@@ -31,7 +32,7 @@ public class LogonPage {
         this.email.sendKeys(email);
         this.password.clear();
         this.password.sendKeys(password);
-        guardAjax(btLogon).click();
+        guardHttp(btLogon).click();
     }
 
     public boolean isPresent() {
