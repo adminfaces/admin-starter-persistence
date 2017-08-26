@@ -29,6 +29,9 @@ public class Deployments {
         MavenResolverSystem resolver = Maven.resolver();
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("com.github.adminfaces:admin-template").withTransitivity().asFile());
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("com.github.adminfaces:admin-persistence").withTransitivity().asFile());
+        war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("org.primefaces.extensions:primefaces-extensions").withTransitivity().asFile());
+        war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("org.omnifaces:omnifaces:2.1").withTransitivity().asFile());
+
 
         war.merge(ShrinkWrap.create(GenericArchive.class).as(ExplodedImporter.class).importDirectory("src/main/webapp").as(GenericArchive.class), "/", Filters.include(".*\\.(xml|xhtml|html|css|js|png|gif)$"));
 
