@@ -1,16 +1,27 @@
 package com.github.adminfaces.ft;
 
+import com.github.adminfaces.ft.pages.IndexPage;
+import com.github.adminfaces.ft.pages.LogonPage;
 import com.github.adminfaces.ft.util.Deployments;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
+import org.jboss.arquillian.graphene.GrapheneElement;
+import org.jboss.arquillian.graphene.findby.FindByJQuery;
+import org.jboss.arquillian.graphene.page.InitialPage;
+import org.jboss.arquillian.graphene.page.Page;
 import org.jboss.arquillian.junit.Arquillian;
+import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 
 import java.net.URL;
+
+import static org.assertj.core.api.Java6Assertions.assertThat;
 
 /**
  * Car acceptance tests
@@ -32,61 +43,20 @@ public class AdminFt {
     @Drone
     WebDriver webDriver;
 
-   /* @FindByJQuery("div.ui-growl-message")
-    private GrapheneElement growl;
+    @FindByJQuery("div[id='messages'] span.ui-messages-error-detail")
+    private GrapheneElement errorMessages;
 
-    @FindByJQuery("a[id$=openLogin]")
-    private GrapheneElement anchorLogin;
+    @FindByJQuery("div[id='messages'] span.ui-messages-info-detail")
+    private GrapheneElement inforMessages;
 
-    @FindByJQuery("div[id$=userPanel]")
-    private GrapheneElement divLogin;
+
 
     @Page
     IndexPage index;
 
-    @FindByJQuery("div[id$=logonPanel]")
-    LogonDialog logonPanel;
-
-
-    @Before
-    public void initDataset() {
-        DBUnitUtils.createRemoteDataset(url, "car.yml");
+    @Test
+    @InSequence(1)
+    public void shouldLogonSuccessfully(@InitialPage LogonPage logon) {
+        assertThat(logon.isPresent()).isTrue();
     }
-
-    @After
-    public void clear() {
-        DBUnitUtils.deleteRemoteDataset(url, "car.yml");
-    }
-
-    @When("^search car by id (\\d+)$")
-    public void searchCarById(int id) {
-        Graphene.goTo(IndexPage.class);
-        index.findById("" + id);
-    }
-
-    @Then("^must find car with model \"([^\"]*)\" and price (.+)$")
-    public void returnCarsWithModel(String model, final double price) {
-        assertEquals(model, index.getInputModel().getAttribute("value"));
-        assertEquals(price, Double.parseDouble(index.getInputPrice().getAttribute("value")), 0);
-    }
-
-    @Given("^user is logged in as \"([^\"]*)\"$")
-    public void user_is_logged_in_as(String user) throws Throwable {
-        Graphene.goTo(IndexPage.class);
-        anchorLogin.click();
-        waitModel().until().element(logonPanel.getUser()).is().present();
-        logonPanel.doLogon(user);
-        assertThat(divLogin.getText()).isEqualTo(user);
-    }
-
-    @And("^click on remove button$")
-    public void click_on_remove_button() throws Throwable {
-        index.remove();
-    }
-
-    @Then("^message \"([^\"]*)\" should be displayed$")
-    public void message_should_be_displayed(String msg) throws Throwable {
-        assertThat(growl.getText()).isEqualTo(msg);
-    }
-*/
 }

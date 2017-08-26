@@ -27,13 +27,13 @@ public class Deployments {
         war.addPackages(true, "com.github.adminfaces.starter");
         //LIBS
         MavenResolverSystem resolver = Maven.resolver();
-        war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("org.primefaces:primefaces").withoutTransitivity().asSingleFile());
+        war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("com.github.adminfaces:admin-template").withTransitivity().asFile());
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("com.github.adminfaces:admin-persistence").withTransitivity().asFile());
 
         war.merge(ShrinkWrap.create(GenericArchive.class).as(ExplodedImporter.class).importDirectory("src/main/webapp").as(GenericArchive.class), "/", Filters.include(".*\\.(xml|xhtml|html|css|js|png|gif)$"));
 
         //resources
-        war.addAsResource("persistence.xml", "META-INF/persistence.xml");
+        war.addAsResource(new File("src/main/resources/META-INF/persistence.xml"), "META-INF/persistence.xml");
 
         war.addAsResource(new File("src/main/resources/admin-config.properties"), "admin-config.properties");
         war.addAsResource(new File("src/main/resources/messages.properties"), "messages.properties");

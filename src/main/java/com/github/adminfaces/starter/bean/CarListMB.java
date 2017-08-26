@@ -70,38 +70,38 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
             nameParam = carFilter.getName();
         }
 
-        if(has(nameParam)) {
-              sb.append("<b>name</b>: " + nameParam + ", ");
+        if (has(nameParam)) {
+            sb.append("<b>name</b>: " + nameParam + ", ");
         }
 
         String modelParam = null;
         if (filter.hasParam("model")) {
-             modelParam = filter.getStringParam("model");
+            modelParam = filter.getStringParam("model");
         } else if (has(carFilter) && carFilter.getModel() != null) {
-             modelParam = carFilter.getModel();
+            modelParam = carFilter.getModel();
         }
 
-        if(has(modelParam)) {
-              sb.append("<b>model</b>: " + modelParam + ", ");
+        if (has(modelParam)) {
+            sb.append("<b>model</b>: " + modelParam + ", ");
         }
 
         Double priceParam = null;
         if (filter.hasParam("price")) {
-           priceParam = filter.getDoubleParam("price");
+            priceParam = filter.getDoubleParam("price");
         } else if (has(carFilter) && carFilter.getModel() != null) {
-           priceParam = carFilter.getPrice();
+            priceParam = carFilter.getPrice();
         }
 
-         if(has(priceParam)) {
-              sb.append("<b>price</b>: " + priceParam + ", ");
+        if (has(priceParam)) {
+            sb.append("<b>price</b>: " + priceParam + ", ");
         }
 
         if (filter.hasParam("minPrice")) {
-            sb.append("<b>"+messages.getMessage("label.minPrice")+"</b>: " + filter.getParam("minPrice") + ", ");
+            sb.append("<b>" + messages.getMessage("label.minPrice") + "</b>: " + filter.getParam("minPrice") + ", ");
         }
 
         if (filter.hasParam("maxPrice")) {
-            sb.append("<b>"+messages.getMessage("label.maxPrice")+"</b>: " + filter.getParam("maxPrice") + ", ");
+            sb.append("<b>" + messages.getMessage("label.maxPrice") + "</b>: " + filter.getParam("maxPrice") + ", ");
         }
 
         int commaIndex = sb.lastIndexOf(",");
@@ -117,8 +117,5 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
         return sb.toString();
     }
 
-    @Override
-    public boolean keepFiltersInSession() {
-        return false;
-    }
+
 }

@@ -31,13 +31,13 @@ public class CarFormMB extends CrudMB<Car> implements Serializable {
     }
 
     public void afterRemove() {
-        Faces.getFlash().setKeepMessages(true);
         try {
             Faces.redirect("car-list.xhtml");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public String getRemoveMessage() {
