@@ -87,7 +87,7 @@ public class CarListPage {
     }
 
     public void remove() {
-        guardAjax(btRemove).click();
+        btRemove.click();
         waitModel().until().element(confirmHeader).is().present();
         guardAjax(btYes).click();
     }
