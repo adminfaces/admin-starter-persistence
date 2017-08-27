@@ -8,9 +8,8 @@ cache:
   - "$HOME/.m2/repository"
   - "$HOME/.arquillian"
 
-before_install:
-  - # start your web application and listen on `localhost`
-  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
+#before_install:
+#  - google-chrome-stable --headless --disable-gpu --remote-debugging-port=9222 http://localhost &
 
 script:
 - mvn clean test -Ptests -Darquillian.browser=chromeheadless
