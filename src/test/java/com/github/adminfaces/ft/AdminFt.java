@@ -18,11 +18,14 @@ import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.net.URL;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.jboss.arquillian.graphene.Graphene.waitModel;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Car acceptance tests
@@ -80,23 +83,47 @@ public class AdminFt {
     @Test
     @InSequence(3)
     public void shouldPaginateCars() {
-
+        carList.paginate();
+        carList.getDatatable().findGrapheneElements(By.cssSelector("a.ui-link"))
+                .forEach(e -> assertTrue(e.getText().equals("model 46") ||
+                        e.getText().equals("model 47") ||  e.getText().equals("model 48")
+                        ||  e.getText().equals("model 49") ||  e.getText().equals("model 50")));
     }
+
 
     @Test
     @InSequence(4)
-    public void shouldEditCar() {
-
+    public void shouldFilterByModel() {
+        carList.filterByModel("model 8");
+        assertThat(carList.getDatatable().findElement(By.xpath("//a[contains(@class,'ui-link') and contains(text(),'model 8')]")).isPresent());
+        assertThat(carList.getTableRows()).isNotNull().hasSize(1);
+        assertThat(carList.getTableRows().get(0).getText()).contains("model 8");
     }
 
     @Test
     @InSequence(5)
-    public void shouldRemoveCar() {
-
+    public void shouldRemoveMultipleCars() {
+        carList.clear();
+        webDriver.findElements(By.cssSelector("td .ui-chkbox-box")).forEach(e -> e.click());
+        waitModel();
+        carList.remove();
+        assertThat(infoMessages.getText()).isEqualTo("5 cars deleted successfully!");
     }
 
     @Test
     @InSequence(6)
+    public void shouldEditViaDatatable() {
+
+    }
+
+    @Test
+    @InSequence(7)
+    public void shouldEditViaUrl() {
+
+    }
+
+    @Test
+    @InSequence(7)
     public void shouldInsertCar() {
 
     }
