@@ -95,6 +95,7 @@ public class AdminFt {
     @InSequence(4)
     public void shouldFilterByModel() {
         carList.filterByModel("model 8");
+        waitModel();
         assertThat(carList.getDatatable().findElement(By.xpath("//a[contains(@class,'ui-link') and contains(text(),'model 8')]")).isPresent());
         assertThat(carList.getTableRows()).isNotNull().hasSize(1);
         assertThat(carList.getTableRows().get(0).getText()).contains("model 8");
