@@ -1,9 +1,8 @@
 package com.github.adminfaces.ft;
 
-import com.github.adminfaces.ft.pages.CarListPage;
-import com.github.adminfaces.ft.pages.IndexPage;
-import com.github.adminfaces.ft.pages.LeftMenu;
-import com.github.adminfaces.ft.pages.LogonPage;
+import com.github.adminfaces.ft.pages.*;
+import com.github.adminfaces.ft.pages.fragments.LeftMenu;
+import com.github.adminfaces.ft.pages.fragments.SearchDialog;
 import com.github.adminfaces.ft.util.Deployments;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
@@ -16,15 +15,17 @@ import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.net.URL;
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.jboss.arquillian.graphene.Graphene.waitModel;
+import static org.jboss.arquillian.graphene.Graphene.*;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -55,13 +56,22 @@ public class AdminFt {
 
 
     @Page
+    private LogonPage logon;
+
+    @Page
     private IndexPage index;
 
     @Page
     private CarListPage carList;
 
+    @Page
+    private CarFormPage carForm;
+
     @FindByJQuery("section.sidebar > ul.sidebar-menu")
     private LeftMenu menu;
+
+    @FindByJQuery("div.ui-dialog.box-success")
+    private SearchDialog searchDialog;
 
 
     @Test
@@ -95,16 +105,16 @@ public class AdminFt {
     @InSequence(4)
     public void shouldFilterByModel() {
         carList.filterByModel("model 8");
-        waitModel();
-        assertThat(carList.getDatatable().findElement(By.xpath("//a[contains(@class,'ui-link') and contains(text(),'model 8')]")).isPresent());
-        assertThat(carList.getTableRows()).isNotNull().hasSize(1);
+        waitModel(webDriver).withTimeout(3,TimeUnit.SECONDS);
         assertThat(carList.getTableRows().get(0).getText()).contains("model 8");
     }
 
     @Test
     @InSequence(5)
     public void shouldRemoveMultipleCars() {
+        waitModel(webDriver);
         carList.clear();
+        waitModel(webDriver);
         webDriver.findElements(By.cssSelector("td .ui-chkbox-box")).forEach(e -> e.click());
         waitModel();
         carList.remove();
@@ -114,19 +124,75 @@ public class AdminFt {
     @Test
     @InSequence(6)
     public void shouldEditViaDatatable() {
-
+        waitModel().withTimeout(5,TimeUnit.SECONDS).until()
+                .element(carList.getConfirmHeader()).is().not().visible();
+        carList.filterByModel("model 20");
+        waitModel(webDriver);
+        guardHttp(webDriver.findElement(By.cssSelector("td[role=gridcell] a"))).click();
+        assertThat(carForm.isPresent()).isTrue();
+        carForm.getInputModel().clear();
+        waitGui(webDriver);
+        carForm.getInputModel().sendKeys("model edit");
+        carForm.save();
+        assertThat(infoMessages.getText()).isEqualTo("Car model edit updated successfully");
     }
 
     @Test
     @InSequence(7)
     public void shouldEditViaUrl() {
+        menu.goHome();
+        webDriver.get(url+"/car-form.xhtml?id=20");
+        assertThat(carForm.isPresent()).isTrue();
+        carForm.getInputModel().clear();
+        waitGui(webDriver);
+        carForm.getInputModel().sendKeys("model 20 edit");
+        carForm.save();
+        assertThat(infoMessages.getText()).isEqualTo("Car model 20 edit updated successfully");
+    }
+
+    @Test
+    @InSequence(8)
+    @Ignore("yes button from confirm dialog is not enabled")
+    public void shouldRemoveCar() {
+        waitModel(webDriver);
+        carForm.remove();
+        assertThat(infoMessages.getText()).isEqualTo("Car model 20 edit removed successfully");
+    }
+
+    @Test
+    @InSequence(9)
+    public void shouldInsertCar(@InitialPage CarListPage carList) {
+        carList.newCar();
+        waitModel().until().element(carForm.getInputModel()).is().present();
+        carForm.getInputModel().sendKeys("new model");
+        carForm.getInputName().sendKeys("new name");
+        carForm.getInputPrice().sendKeys("1.5");
+        carForm.save();
+        assertThat(infoMessages.getText()).isEqualTo("Car new model created successfully");
+    }
+
+    @Test
+    @InSequence(10)
+    public void shouldSearchCarByNameAndPrice(@InitialPage CarListPage carList) {
+        carList.search();
+        searchDialog.getName().sendKeys("name1");
+        searchDialog.getMinPrice().sendKeys("16");
+        searchDialog.getMaxPrice().sendKeys("17.8");
+        searchDialog.search();
+        searchDialog.close();
+        assertThat(carList.getTableRows()).hasSize(2);
+        assertThat(carList.getTableRows().get(0).getText()).contains("name16");
+        assertThat(carList.getTableRows().get(1).getText()).contains("name17");
 
     }
 
     @Test
-    @InSequence(7)
-    public void shouldInsertCar() {
-
+    @InSequence(99)
+    public void shouldLogout() {
+        webDriver.findElement(By.id("userImage")).click();
+        waitModel().until().element(By.cssSelector("li.open")).is().present();
+        guardHttp(webDriver.findElement(By.id("logout"))).click();
+        assertThat(logon.isPresent()).isTrue();
     }
 
 
