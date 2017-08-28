@@ -39,4 +39,7 @@ public class LogonPage {
         return loginBox.isPresent();
     }
 
+    public GrapheneElement getLoginBox() {
+        return loginBox;
+    }
 }

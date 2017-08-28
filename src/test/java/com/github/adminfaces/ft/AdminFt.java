@@ -191,8 +191,8 @@ public class AdminFt {
     public void shouldLogout() {
         webDriver.findElement(By.id("userImage")).click();
         waitModel().until().element(By.cssSelector("li.open")).is().present();
-        guardHttp(webDriver.findElement(By.id("logout"))).click();
-        assertThat(logon.isPresent()).isTrue();
+        webDriver.findElement(By.id("logout")).click();
+        waitModel().until().element(logon.getLoginBox()).is().present();
     }
 
 
