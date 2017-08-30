@@ -7,6 +7,7 @@ package com.github.adminfaces.starter.model;
 
 
 import com.github.adminfaces.persistence.model.BaseEntity;
+import com.github.adminfaces.persistence.model.PersistenceEntity;
 
 import javax.persistence.*;
 
@@ -45,6 +46,7 @@ public class Car extends BaseEntity {
         return price;
     }
 
+    @Override
     public Integer getId() {
         return id;
     }

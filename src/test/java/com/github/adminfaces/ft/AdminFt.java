@@ -3,7 +3,7 @@ package com.github.adminfaces.ft;
 import com.github.adminfaces.ft.pages.*;
 import com.github.adminfaces.ft.pages.fragments.LeftMenu;
 import com.github.adminfaces.ft.pages.fragments.SearchDialog;
-import com.github.adminfaces.ft.util.Deployments;
+import com.github.adminfaces.util.Deployments;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.GrapheneElement;
@@ -14,7 +14,13 @@ import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.junit.InSequence;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.Archive;
+import org.jboss.shrinkwrap.api.Filters;
+import org.jboss.shrinkwrap.api.GenericArchive;
+import org.jboss.shrinkwrap.api.ShrinkWrap;
+import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.maven.Maven;
+import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,6 +44,10 @@ public class AdminFt {
     @Deployment(name = "admin-starter.war", testable = false)
     public static Archive<?> createDeployment() {
         WebArchive war = Deployments.createDeployment();
+        MavenResolverSystem resolver = Maven.resolver();
+        war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("com.github.adminfaces:admin-template").withTransitivity().asFile());
+        war.merge(ShrinkWrap.create(GenericArchive.class).as(ExplodedImporter.class).importDirectory("src/main/webapp").as(GenericArchive.class), "/", Filters.include(".*\\.(xml|xhtml|html|css|js|png|gif)$"));
+
         System.out.println(war.toString(true));
         return war;
     }
@@ -105,7 +115,7 @@ public class AdminFt {
     @InSequence(4)
     public void shouldFilterByModel() {
         carList.filterByModel("model 8");
-        waitModel(webDriver).withTimeout(3,TimeUnit.SECONDS);
+        waitModel(webDriver).until().element(By.cssSelector("ul.ui-autocomplete-items")).is().not().visible();
         assertThat(carList.getTableRows().get(0).getText()).contains("model 8");
     }
 
@@ -114,7 +124,8 @@ public class AdminFt {
     public void shouldRemoveMultipleCars() {
         waitModel(webDriver);
         carList.clear();
-        waitModel(webDriver);
+        waitModel(webDriver).until().element(By.cssSelector("div.ui-dialog-content img"))
+                .is().not().visible();
         webDriver.findElements(By.cssSelector("td .ui-chkbox-box")).forEach(e -> e.click());
         waitModel();
         carList.remove();
@@ -127,7 +138,7 @@ public class AdminFt {
         waitModel().withTimeout(5,TimeUnit.SECONDS).until()
                 .element(carList.getConfirmHeader()).is().not().visible();
         carList.filterByModel("model 20");
-        waitModel(webDriver);
+        waitModel(webDriver).until().element(By.cssSelector("ul.ui-autocomplete-items")).is().not().visible();
         guardHttp(webDriver.findElement(By.cssSelector("td[role=gridcell] a"))).click();
         assertThat(carForm.isPresent()).isTrue();
         carForm.getInputModel().clear();

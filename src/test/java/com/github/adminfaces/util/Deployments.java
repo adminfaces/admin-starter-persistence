@@ -1,5 +1,7 @@
-package com.github.adminfaces.ft.util;
+package com.github.adminfaces.util;
 
+import com.github.adminfaces.template.exception.BusinessException;
+import com.github.adminfaces.template.util.Assert;
 import org.jboss.shrinkwrap.api.Filters;
 import org.jboss.shrinkwrap.api.GenericArchive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
@@ -25,16 +27,18 @@ public class Deployments {
     public static WebArchive createDeployment() {
         WebArchive war = ShrinkWrap.create(WebArchive.class);
         war.addPackages(true, "com.github.adminfaces.starter");
+        war.addClasses(BusinessException.class, Assert.class);
         //LIBS
         MavenResolverSystem resolver = Maven.resolver();
-        war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("com.github.adminfaces:admin-template").withTransitivity().asFile());
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("com.github.adminfaces:admin-persistence").withTransitivity().asFile());
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("org.primefaces.extensions:primefaces-extensions").withTransitivity().asFile());
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("org.omnifaces:omnifaces:2.1").withTransitivity().asFile());
 
+        //WEB-INF
 
-        war.merge(ShrinkWrap.create(GenericArchive.class).as(ExplodedImporter.class).importDirectory("src/main/webapp").as(GenericArchive.class), "/", Filters.include(".*\\.(xml|xhtml|html|css|js|png|gif)$"));
-
+        war.addAsWebInfResource(new File(WEB_INF,"beans.xml"), "beans.xml");
+        war.addAsWebInfResource(new File(WEB_INF,"web.xml"), "web.xml");
+        war.addAsWebInfResource(new File(WEB_INF,"faces-config.xml"), "faces-config.xml");
         //resources
         war.addAsResource(new File("src/main/resources/META-INF/persistence.xml"), "META-INF/persistence.xml");
 

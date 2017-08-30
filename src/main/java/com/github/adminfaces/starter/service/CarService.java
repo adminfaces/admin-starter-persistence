@@ -4,20 +4,19 @@
  */
 package com.github.adminfaces.starter.service;
 
+import com.github.adminfaces.persistence.model.Filter;
+import com.github.adminfaces.persistence.service.CrudService;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.model.Car_;
 import com.github.adminfaces.template.exception.BusinessException;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.metamodel.SingularAttribute;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
-
-import com.github.adminfaces.persistence.model.Filter;
-import com.github.adminfaces.persistence.service.CrudService;
-import org.apache.deltaspike.data.api.criteria.QuerySelection;
-import org.apache.deltaspike.data.impl.criteria.selection.AttributeQuerySelection;
 
 import static com.github.adminfaces.template.util.Assert.has;
 
@@ -27,13 +26,9 @@ import static com.github.adminfaces.template.util.Assert.has;
 @Stateless
 public class CarService extends CrudService<Car, Integer> implements Serializable {
 
+    @Inject
+    protected CarRepository carRepository;//you can create repositories to extract complex queries from your service
 
-    public List<String> getModels(String query) {
-        return criteria()
-                .select(String.class, attribute(Car_.model))
-                .likeIgnoreCase(Car_.model, "%"+query+"%")
-                .getResultList();
-    }
 
     protected Criteria<Car, Car> configRestrictions(Filter<Car> filter) {
 
@@ -56,7 +51,7 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
         if (has(filter.getEntity())) {
             Car filterEntity = filter.getEntity();
             if (has(filterEntity.getModel())) {
-                criteria.likeIgnoreCase(Car_.model, "%"+filterEntity.getModel());
+                criteria.likeIgnoreCase(Car_.model, "%" + filterEntity.getModel());
             }
 
             if (has(filterEntity.getPrice())) {
@@ -64,19 +59,11 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
             }
 
             if (has(filterEntity.getName())) {
-                criteria.likeIgnoreCase(Car_.name, "%"+filterEntity.getName()+"%");
+                criteria.likeIgnoreCase(Car_.name, "%" + filterEntity.getName() + "%");
             }
         }
         return criteria;
     }
-
-    public List<Car> listByModel(String model) {
-        return criteria()
-                .eqIgnoreCase(Car_.model, model)
-                .getResultList();
-    }
-
-
 
     public void beforeInsert(Car car) {
         validate(car);
@@ -99,11 +86,9 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
             be.addException(new BusinessException("Car price cannot be empty"));
         }
 
-        if (criteria()
+        if (count(criteria()
                 .eqIgnoreCase(Car_.name, car.getName())
-                .notEq(Car_.id, car.getId())
-                .select(Long.class, count(Car_.id))
-                .getSingleResult() > 0) {
+                .notEq(Car_.id, car.getId())) > 0) {
 
             be.addException(new BusinessException("Car name must be unique"));
         }
@@ -111,6 +96,27 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
         if (has(be.getExceptionList())) {
             throw be;
         }
+    }
+
+
+    public List<Car> listByModel(String model) {
+        return criteria()
+                .likeIgnoreCase(Car_.model, model)
+                .getResultList();
+    }
+
+    public List<String> getModels(String query) {
+        return criteria()
+                .select(String.class, attribute(Car_.model))
+                .likeIgnoreCase(Car_.model, "%" + query + "%")
+                .getResultList();
+    }
+
+    public BigDecimal getTotalPriceByModel(Car car) {
+        if (!has(car.hasModel())) {
+            throw new BusinessException("Provide car model to get the total price.");
+        }
+        return carRepository.getTotalPriceByModel(car.getModel());
     }
 
 
