@@ -12,8 +12,8 @@ import java.math.BigDecimal;
 public interface CarRepository extends EntityRepository<Car,Integer> {
 
 
-    @Query("SELECT SUM(c.price) FROM Car c WHERE c.model = :model")
-    public abstract BigDecimal getTotalPriceByModel(@QueryParam("model") String model);
+    @Query("SELECT SUM(c.price) FROM Car c WHERE upper(c.model) like :model")
+    Double getTotalPriceByModel(@QueryParam("model") String model);
 
 
 }

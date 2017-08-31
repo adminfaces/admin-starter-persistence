@@ -260,6 +260,11 @@ public class AdminIt {
          //should list all when no property is provided
          assertThat(cars).isNotNull().hasSize(4);
 
+    }
 
+    @Test
+    @UsingDataSet("cars.yml")
+    public void shoulGetTotalPriceByModel() {
+        assertEquals((Double) 20380.53, carService.getTotalPriceByModel(new Car().model("%porche%")));
     }
 }

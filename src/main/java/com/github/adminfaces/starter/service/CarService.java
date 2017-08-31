@@ -112,11 +112,11 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
                 .getResultList();
     }
 
-    public BigDecimal getTotalPriceByModel(Car car) {
+    public Double getTotalPriceByModel(Car car) {
         if (!has(car.hasModel())) {
             throw new BusinessException("Provide car model to get the total price.");
         }
-        return carRepository.getTotalPriceByModel(car.getModel());
+        return carRepository.getTotalPriceByModel(car.getModel().toUpperCase());
     }
 
 
