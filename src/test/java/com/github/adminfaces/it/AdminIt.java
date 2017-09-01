@@ -53,7 +53,7 @@ public class AdminIt {
     @Test
     @UsingDataSet("cars.yml")
     public void shouldCountCars() {
-        assertEquals(carService.count(), 4);
+        assertEquals(carService.count().intValue(), 4);
     }
 
     @Test
@@ -121,18 +121,18 @@ public class AdminIt {
         Car newCar = new Car().model("My Car")
                 .name("car name").price(1d);
         carService.insert(newCar);
-        assertEquals(countBefore + 1, carService.count());
+        assertEquals(countBefore + 1, carService.count().intValue());
     }
 
     @Test
     @UsingDataSet("cars.yml")
     @Transactional(TransactionMode.DISABLED)
     public void shouldRemoveCar() {
-        assertEquals(carService.count(carService.criteria().eq(Car_.id,1)),1);
+        assertEquals(carService.count(carService.criteria().eq(Car_.id,1)).intValue(),1);
         Car car = carService.findById(1);
         assertNotNull(car);
         carService.remove(car);
-        assertEquals(carService.count(carService.criteria().eq(Car_.id,1)),0);
+        assertEquals(carService.count(carService.criteria().eq(Car_.id,1)).intValue(),0);
     }
 
     @Test
@@ -231,7 +231,7 @@ public class AdminIt {
     @Test
     @UsingDataSet("cars.yml")
     public void shoulListCarsUsingCrudUtility() {
-        assertEquals(4, crudService.count());
+        assertEquals(4, crudService.count().intValue());
         long count = crudService.count(crudService.criteria()
                 .likeIgnoreCase(Car_.model, "%porche%")
                 .gtOrEq(Car_.price, 10000D));
