@@ -255,11 +255,6 @@ public class AdminIt {
                 .extracting("name")
                 .contains("porche avenger");
 
-         cars = crudService.exampleLike(carExample).getResultList();
-
-         //should list all when no property is provided
-         assertThat(cars).isNotNull().hasSize(4);
-
     }
 
     @Test
