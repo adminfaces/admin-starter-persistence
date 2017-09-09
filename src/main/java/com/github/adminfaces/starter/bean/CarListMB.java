@@ -36,7 +36,6 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
         setCrudService(carService);
     }
 
-
     public List<String> completeModel(String query) {
         List<String> result = carService.getModels(query);
         return result;

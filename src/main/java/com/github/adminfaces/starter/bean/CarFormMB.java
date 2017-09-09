@@ -4,6 +4,7 @@
  */
 package com.github.adminfaces.starter.bean;
 
+import com.github.adminfaces.persistence.bean.BeanService;
 import com.github.adminfaces.persistence.bean.CrudMB;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.service.CarService;
@@ -20,15 +21,9 @@ import java.io.Serializable;
  */
 @Named
 @ViewScoped
+@BeanService(CarService.class)//use annotation instead of setter
 public class CarFormMB extends CrudMB<Car> implements Serializable {
 
-    @Inject
-    CarService carService;
-
-    @Inject
-    public void setCrudService() {
-        super.setCrudService(carService);
-    }
 
     public void afterRemove() {
         try {
