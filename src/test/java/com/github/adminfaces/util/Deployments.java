@@ -33,7 +33,6 @@ public class Deployments {
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("com.github.adminfaces:admin-persistence").withTransitivity().asFile());
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("org.primefaces.extensions:primefaces-extensions").withTransitivity().asFile());
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("org.omnifaces:omnifaces:2.1").withTransitivity().asFile());
-        war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("com.google.apis:google-api-services-drive").withTransitivity().asFile());
 
 
         //WEB-INF
