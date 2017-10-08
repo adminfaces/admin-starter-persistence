@@ -20,9 +20,9 @@
             }
 
             #footer {
-                float:right;
+                float: right;
                 font-size: 12px;
-                color:#3c8dbc;
+                color: #3c8dbc;
                 font-weight: 500;
             }
 
@@ -168,7 +168,8 @@
                                  ignoreAutoUpdate="true" styleClass="btn-primary"/>
                 <p:spacer height="5"/>
                 <p:commandButton value="Clear" action="#{carListMB.clear}" process="@this"
-                                 update="@form @(.ui-datatable, .ui-tooltip)" styleClass="btn-success" icon="fa fa-refresh"/>
+                                 update="@form @(.ui-datatable, .ui-tooltip)" styleClass="btn-success"
+                                 icon="fa fa-refresh"/>
                 <p:spacer height="5"/>
                 <p:commandButton value="Close" icon="fa fa-close" oncomplete="PF('searchDialog').hide()"/>
                 <p:separator/>
@@ -212,10 +213,11 @@
             </h:form>
         </p:dialog>
 
-        <p:tooltip for="@(div[id$=footer])" escape="false" position="top"
+        <p:outputPanel autoUpdate="true">
+            <p:tooltip for="@(div[id$=footer])" escape="false" position="top"
                        showEvent="mouseover" hideEvent="mouseleave"
                        value="#{carListMB.searchCriteria}"/>
-
+        </p:outputPanel>
 
     </ui:define>
 
