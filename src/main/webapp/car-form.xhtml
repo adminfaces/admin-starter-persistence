@@ -10,7 +10,8 @@
 
     <ui:define name="body">
         <f:metadata>
-            <f:viewParam name="id" value="#{carFormMB.id}" converter="javax.faces.Integer"/>
+            <f:viewParam name="id" value="#{carFormMB.id.id}" converter="javax.faces.Integer"/>
+            <f:viewParam name="id2" value="#{carFormMB.id.id2}" converter="javax.faces.Long"/>
             <!-- use view action if you are in a Java EE 7 server: <f:viewAction action="#{carFormMB.init()}"/>-->
             <f:event type="preRenderView" listener="#{carFormMB.init}"/>
         </f:metadata>

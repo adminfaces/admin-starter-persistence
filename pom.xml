@@ -49,7 +49,7 @@
         <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-persistence</artifactId>
-            <version>1.0.0-RC9</version>
+            <version>1.0.0-RC10-SNAPSHOT</version>
         </dependency>
 
         <!-- persistence -->
@@ -100,28 +100,6 @@
             <scope>test</scope>
             <type>pom</type>
         </dependency>
-
-        <dependency>
-            <groupId>org.arquillian.universe</groupId>
-            <artifactId>arquillian-graphene</artifactId>
-            <scope>test</scope>
-            <type>pom</type>
-        </dependency>
-
-          <dependency>
-             <groupId>org.jboss.arquillian.extension</groupId>
-             <artifactId>arquillian-drone-webdriver-depchain</artifactId>
-             <version>2.4.1</version>
-             <type>pom</type>
-             <scope>test</scope>
-         </dependency>
-
-         <dependency>
-             <groupId>org.seleniumhq.selenium</groupId>
-             <artifactId>selenium-api</artifactId>
-             <version>3.5.1</version>
-             <scope>test</scope>
-         </dependency>
 
         <dependency>
             <groupId>org.arquillian.universe</groupId>
@@ -246,9 +224,9 @@
                         <artifactId>maven-surefire-plugin</artifactId>
                         <version>2.19.1</version>
                         <configuration>
+                            <runOrder>reversealphabetical</runOrder>
                             <includes>
                                 <include>**/*It.java</include>
-                                <include>**/*Ft.java</include>
                             </includes>
                         </configuration>
                     </plugin>

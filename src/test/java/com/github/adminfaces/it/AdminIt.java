@@ -5,6 +5,7 @@ import com.github.adminfaces.persistence.model.Filter;
 import com.github.adminfaces.persistence.service.CrudService;
 import com.github.adminfaces.persistence.service.Service;
 import com.github.adminfaces.starter.model.Car;
+import com.github.adminfaces.starter.model.CarPK;
 import com.github.adminfaces.starter.model.Car_;
 import com.github.adminfaces.starter.service.CarService;
 import com.github.adminfaces.template.exception.BusinessException;
@@ -47,22 +48,22 @@ public class AdminIt {
 
     @Inject
     @Service
-    CrudService<Car, Integer> crudService;
+    CrudService<Car, CarPK> crudService;
 
 
     @Test
     @UsingDataSet("cars.yml")
     public void shouldCountCars() {
-        assertEquals(carService.count().intValue(), 4);
+        assertEquals(crudService.count().intValue(), 4);
     }
 
     @Test
     @UsingDataSet("cars.yml")
     public void shouldFindCarById() {
-        Car car = carService.findById(1);
+        Car car = carService.findById(new CarPK(1,2L));
         assertThat(car).isNotNull()
-                .extracting("id")
-                .contains(new Integer(1));
+                .extracting("model")
+                .contains("Ferrari");
     }
 
     @Test
@@ -73,7 +74,7 @@ public class AdminIt {
         assertThat(cars).isNotNull()
                 .hasSize(1)
                 .extracting("id")
-                .contains(new Integer(1));
+                .contains(new CarPK(1,2L));
     }
 
     @Test
@@ -91,7 +92,7 @@ public class AdminIt {
 
     @Test
     public void shouldNotInsertCarWithoutModel() {
-        Car newCar = new Car().name("My Car")
+        Car newCar = new Car(new CarPK(99,99L)).name("My Car")
                 .price(1d);
         try {
             carService.insert(newCar);
@@ -104,11 +105,11 @@ public class AdminIt {
     @UsingDataSet("cars.yml")
     @Cleanup(phase = TestExecutionPhase.BEFORE)
     public void shouldNotInsertCarWithDuplicateName() {
-        Car newCar = new Car().model("My Car")
+        Car newCar = new Car(new CarPK(99,99L)).model("My Car")
                 .name("ferrari spider")
                 .price(1d);
         try {
-            carService.insert(newCar);
+            carService.saveOrUpdate(newCar);
         } catch (BusinessException e) {
             assertEquals("Car name must be unique", e.getExceptionList().get(0).getMessage());
         }
@@ -118,9 +119,9 @@ public class AdminIt {
     public void shouldInsertCar() {
         long countBefore = carService.count();
         assertEquals(countBefore, 0);
-        Car newCar = new Car().model("My Car")
+        Car newCar = new Car(new CarPK(99,99L)).model("My Car")
                 .name("car name").price(1d);
-        carService.insert(newCar);
+        carService.saveOrUpdate(newCar);
         assertEquals(countBefore + 1, carService.count().intValue());
     }
 
@@ -128,11 +129,11 @@ public class AdminIt {
     @UsingDataSet("cars.yml")
     @Transactional(TransactionMode.DISABLED)
     public void shouldRemoveCar() {
-        assertEquals(carService.count(carService.criteria().eq(Car_.id,1)).intValue(),1);
-        Car car = carService.findById(1);
+        assertEquals(carService.count(carService.criteria().eq(Car_.id,new CarPK(1,2L))).intValue(),1);
+        Car car = carService.findById(new CarPK(1,2L));
         assertNotNull(car);
         carService.remove(car);
-        assertEquals(carService.count(carService.criteria().eq(Car_.id,1)).intValue(),0);
+        assertEquals(carService.count(carService.criteria().eq(Car_.id,new CarPK(1,2L))).intValue(),0);
     }
 
     @Test
@@ -149,12 +150,12 @@ public class AdminIt {
         List<Car> cars = carService.paginate(carFilter);
         assertNotNull(cars);
         assertEquals(cars.size(), 1);
-        assertEquals(cars.get(0).getId(), new Integer(1));
+        assertEquals(cars.get(0).getId(), new CarPK(1,2L));
         carFilter.setFirst(1);//get second database page
         cars = carService.paginate(carFilter);
         assertNotNull(cars);
         assertEquals(cars.size(), 1);
-        assertEquals(cars.get(0).getId(), new Integer(2));
+        assertEquals(cars.get(0).getId(), new CarPK(2,2L));
         carFilter.setFirst(0);
         carFilter.setPageSize(4);
         cars = carService.paginate(carFilter);
@@ -200,10 +201,11 @@ public class AdminIt {
     @Test
     @UsingDataSet("cars.yml")
     public void shouldPaginateCarsByIdInParam() {
-        Filter<Car> carFilter = new Filter<Car>().setFirst(0).setPageSize(2).addParam("id", 1);
+        Filter<Car> carFilter = new Filter<Car>().setFirst(0).setPageSize(2)
+                .addParam("id", new CarPK(1,2L));
         List<Car> cars = carService.paginate(carFilter);
         assertThat(cars).isNotNull().hasSize(1)
-                .extracting("id").contains(1);
+                .extracting("id").contains(new CarPK(1,2L));
     }
 
     @Test

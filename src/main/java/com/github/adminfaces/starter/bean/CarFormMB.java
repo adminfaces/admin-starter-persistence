@@ -7,10 +7,13 @@ package com.github.adminfaces.starter.bean;
 import com.github.adminfaces.persistence.bean.BeanService;
 import com.github.adminfaces.persistence.bean.CrudMB;
 import com.github.adminfaces.starter.model.Car;
+import com.github.adminfaces.starter.model.CarPK;
 import com.github.adminfaces.starter.service.CarService;
 import org.omnifaces.cdi.ViewScoped;
 import org.omnifaces.util.Faces;
 
+import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
@@ -33,6 +36,23 @@ public class CarFormMB extends CrudMB<Car> implements Serializable {
         }
     }
 
+    @PostConstruct
+    public void initBean() {
+        id = new CarPK();
+    }
+
+    @Override
+    public void init() {
+        if (FacesContext.getCurrentInstance().getPartialViewContext().isAjaxRequest()) {
+            return;
+        }
+
+        CarPK carPK = (CarPK) id;
+
+        if (carPK.getId() != null && carPK.getId2() != null) {
+            entity =  crudService.findById(id);
+        }
+    }
 
     @Override
     public String getRemoveMessage() {
@@ -49,5 +69,6 @@ public class CarFormMB extends CrudMB<Car> implements Serializable {
     public String getUpdateMessage() {
         return "Car " + entity.getModel() + " updated successfully";
     }
+
 
 }

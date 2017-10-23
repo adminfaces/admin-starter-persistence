@@ -4,10 +4,12 @@ import com.github.adminfaces.persistence.bean.CrudMB;
 import com.github.adminfaces.persistence.service.CrudService;
 import com.github.adminfaces.persistence.service.Service;
 import com.github.adminfaces.starter.model.Car;
+import com.github.adminfaces.starter.model.CarPK;
 import com.github.adminfaces.starter.service.CarService;
 import com.github.adminfaces.template.exception.BusinessException;
 import org.omnifaces.cdi.ViewScoped;
 
+import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -31,6 +33,11 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
     @Service
     CrudService<Car, Integer> crudService; //generic injection
 
+    @PostConstruct
+    public void init() {
+        id = new CarPK();
+    }
+
     @Inject
     public void initService() {
         setCrudService(carService);
@@ -41,11 +48,12 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
         return result;
     }
 
-    public void findCarById(Integer id) {
-        if (id == null) {
+    public void findCarById(CarPK carPK) {
+        if (carPK == null) {
             throw new BusinessException("Provide Car ID to load");
         }
-        selectionList.add(crudService.findById(id));
+        getFilter().addParam("id",carPK);
+        selectionList.add(crudService.findById(carPK));
     }
 
     public void delete() {

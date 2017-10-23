@@ -18,13 +18,15 @@ import javax.persistence.*;
 @Table(name = "car")
 public class Car extends BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
+    @EmbeddedId
+    private CarPK id;
+
     @Column(name = "model")
     private String model;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "price")
     private Double price;
 
@@ -34,7 +36,7 @@ public class Car extends BaseEntity {
     public Car() {
     }
 
-    public Car(Integer id) {
+    public Car(CarPK id) {
         this.id = id;
     }
 
@@ -47,7 +49,7 @@ public class Car extends BaseEntity {
     }
 
     @Override
-    public Integer getId() {
+    public CarPK getId() {
         return id;
     }
 
@@ -96,5 +98,9 @@ public class Car extends BaseEntity {
 
     public boolean hasName() {
         return name != null && !"".equals(name.trim());
+    }
+
+    public void setId(CarPK id) {
+        this.id = id;
     }
 }

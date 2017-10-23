@@ -99,15 +99,27 @@
 
 
                         <f:facet name="header">
-                            Find Car by id: <p:inputText id="inptId" value="#{carListMB.id}"/>
-                            <p:spacer height="5"/>
-                            <p:commandButton id="brFind"
-                                             value="Find"
-                                             action="#{carListMB.findCarById(carListMB.id)}"
-                                             process="@form"
-                                             update="@form"
-                                             styleClass="btn-flat bg-black"
-                                             partialSubmit="true"/>
+                                Find Car by id:
+                                <p:panelGrid layout="grid" columns="1">
+                                    <h:panelGroup>
+                                        <p:outputLabel for="inptId" value="Id1:"/>
+                                        <p:spacer height="10"/>
+                                        <p:inputText id="inptId" value="#{carListMB.id.id}" />
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:outputLabel for="inptId2" value="Id2:"/>
+                                        <p:spacer height="10"/>
+                                        <p:inputText id="inptId2" value="#{carListMB.id.id2}" />
+                                    </h:panelGroup>
+                                </p:panelGrid>
+                                <p:spacer height="5"/>
+                                <p:commandButton id="brFind"
+                                                 value="Find"
+                                                 action="#{carListMB.findCarById(carListMB.id)}"
+                                                 process="@form"
+                                                 update="@form"
+                                                 styleClass="btn-flat bg-black"
+                                                 partialSubmit="true"/>
                         </f:facet>
                         <p:column selectionMode="multiple" width="5%" styleClass="align-center"/>
 
@@ -122,7 +134,8 @@
                                 </p:autoComplete>
                             </f:facet>
                             <p:link value="#{c.model}" outcome="car-form.xhtml">
-                                <f:param name="id" value="#{c.id}"/>
+                                <f:param name="id" value="#{c.id.id}"/>
+                                <f:param name="id2" value="#{c.id.id2}"/>
                             </p:link>
 
                         </p:column>

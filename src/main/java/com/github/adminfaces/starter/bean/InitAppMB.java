@@ -3,6 +3,7 @@ package com.github.adminfaces.starter.bean;
 import com.github.adminfaces.persistence.service.CrudService;
 import com.github.adminfaces.persistence.service.Service;
 import com.github.adminfaces.starter.model.Car;
+import com.github.adminfaces.starter.model.CarPK;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -27,7 +28,7 @@ public class InitAppMB implements Serializable {
 
 
     private void create(int i) {
-        crudService.insert(new Car().model("model " + i).name("name" + i).price(Double.valueOf(i)));
+        crudService.saveOrUpdate(new Car(new CarPK(i,new Long(i))).model("model " + i).name("name" + i).price(Double.valueOf(i)));
     }
 
 }

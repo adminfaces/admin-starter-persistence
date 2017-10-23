@@ -7,16 +7,16 @@ package com.github.adminfaces.starter.service;
 import com.github.adminfaces.persistence.model.Filter;
 import com.github.adminfaces.persistence.service.CrudService;
 import com.github.adminfaces.starter.model.Car;
+import com.github.adminfaces.starter.model.CarPK;
 import com.github.adminfaces.starter.model.Car_;
 import com.github.adminfaces.template.exception.BusinessException;
 import org.apache.deltaspike.data.api.criteria.Criteria;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.metamodel.SingularAttribute;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
+import java.util.Random;
 
 import static com.github.adminfaces.template.util.Assert.has;
 
@@ -24,7 +24,7 @@ import static com.github.adminfaces.template.util.Assert.has;
  * @author rmpestano
  */
 @Stateless
-public class CarService extends CrudService<Car, Integer> implements Serializable {
+public class CarService extends CrudService<Car, CarPK> implements Serializable {
 
     @Inject
     protected CarRepository carRepository;//you can create repositories to extract complex queries from your service
@@ -36,7 +36,7 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
 
         //create restrictions based on parameters map
         if (filter.hasParam("id")) {
-            criteria.eq(Car_.id, filter.getIntParam("id"));
+            criteria.eq(Car_.id, (CarPK) filter.getParam("id"));
         }
 
         if (filter.hasParam("minPrice") && filter.hasParam("maxPrice")) {
@@ -67,6 +67,8 @@ public class CarService extends CrudService<Car, Integer> implements Serializabl
 
     public void beforeInsert(Car car) {
         validate(car);
+        car.setId(new CarPK(new Random(System.currentTimeMillis()).nextInt(99999)
+                , (long) new Random(System.currentTimeMillis()).nextInt(99999)));
     }
 
     public void beforeUpdate(Car car) {
