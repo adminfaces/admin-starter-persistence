@@ -21,10 +21,13 @@ public class Car extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
     @Column(name = "model")
     private String model;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "price")
     private Double price;
 

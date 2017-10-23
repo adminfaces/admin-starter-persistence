@@ -46,6 +46,7 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
             throw new BusinessException("Provide Car ID to load");
         }
         selectionList.add(crudService.findById(id));
+        getFilter().addParam("id",id);
     }
 
     public void delete() {
