@@ -45,7 +45,11 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
         if (id == null) {
             throw new BusinessException("Provide Car ID to load");
         }
-        selectionList.add(crudService.findById(id));
+        Car carFound = crudService.findById(id);
+        if(carFound == null) {
+            throw new BusinessException(String.format("No cart found with id %s",id));
+        }
+        selectionList.add(carFound);
         getFilter().addParam("id",id);
     }
 
