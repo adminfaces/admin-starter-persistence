@@ -15,6 +15,7 @@
 	<extension qualifier="webdriver">
 		<property name="browser">${arquillian.browser}</property>
 		<property name="dimensions">1280x1024</property>
+		<property name="chromeDriverVersion">2.31</property>
 	</extension>
 
 	<extension qualifier="graphene">

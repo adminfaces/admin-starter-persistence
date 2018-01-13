@@ -8,4 +8,4 @@ cache:
   - "$HOME/.arquillian"
 
 script:
-- mvn clean test -Ptests -Darquillian.browser=phantomjs
+- mvn clean test -Ptests -Darquillian.browser=chromeheadless

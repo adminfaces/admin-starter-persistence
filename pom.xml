@@ -108,16 +108,16 @@
             <type>pom</type>
         </dependency>
         <dependency>
-            <groupId>org.arquillian.universe</groupId>
-            <artifactId>arquillian-persistence</artifactId>
+            <groupId>org.jboss.arquillian.extension</groupId>
+            <artifactId>arquillian-drone-webdriver-depchain</artifactId>
+            <version>2.4.1</version>
             <type>pom</type>
             <scope>test</scope>
         </dependency>
-
         <dependency>
-            <groupId>org.jboss.arquillian.extension</groupId>
-            <artifactId>arquillian-transaction-jta</artifactId>
-            <version>1.0.5</version>
+            <groupId>org.arquillian.universe</groupId>
+            <artifactId>arquillian-persistence</artifactId>
+            <type>pom</type>
             <scope>test</scope>
         </dependency>
 
@@ -149,14 +149,14 @@
             <dependency>
                 <groupId>org.jboss.arquillian.selenium</groupId>
                 <artifactId>selenium-bom</artifactId>
-                <version>3.5.3</version>
+                <version>3.4.0</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
             <dependency>
                 <groupId>org.arquillian</groupId>
                 <artifactId>arquillian-universe</artifactId>
-                <version>1.1.13.7</version>
+                <version>1.1.13.5</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>
@@ -235,6 +235,42 @@
                             <runOrder>reversealphabetical</runOrder>
                             <includes>
                                 <include>**/*It.java</include>
+                                <include>**/*Ft.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <profile>
+            <id>whitebox</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.19.1</version>
+                        <configuration>
+                            <runOrder>reversealphabetical</runOrder>
+                            <includes>
+                                <include>**/*It.java</include>
+                            </includes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        
+        <profile>
+            <id>blackbox</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>2.19.1</version>
+                        <configuration>
+                            <runOrder>reversealphabetical</runOrder>
+                            <includes>
                                 <include>**/*Ft.java</include>
                             </includes>
                         </configuration>
