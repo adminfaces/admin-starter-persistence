@@ -127,7 +127,8 @@ public class AdminFt {
         waitModel(webDriver).until().element(By.cssSelector("div.ui-dialog-content img"))
                 .is().not().visible();
         webDriver.findElements(By.cssSelector("td .ui-chkbox-box")).forEach(e -> e.click());
-        waitModel();
+        waitModel(webDriver).until().element(By.cssSelector("div.ui-dialog-content img"))
+                .is().not().visible();
         carList.remove();
         assertThat(infoMessages.getText()).isEqualTo("5 cars deleted successfully!");
     }
