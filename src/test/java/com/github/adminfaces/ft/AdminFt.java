@@ -26,6 +26,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.interactions.Actions;
 
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
@@ -126,7 +127,12 @@ public class AdminFt {
         carList.clear();
         waitModel(webDriver).until().element(By.cssSelector("div.ui-dialog-content img"))
                 .is().not().visible();
-        webDriver.findElements(By.cssSelector("td .ui-chkbox-box")).forEach(e -> e.click());
+        webDriver.findElements(By.cssSelector("td .ui-chkbox-box")).forEach(e -> {
+                    Actions actions = new Actions(webDriver);
+                    actions.moveToElement(e).click().perform();
+                    waitModel();
+            }
+        );
         waitModel(webDriver).until().element(By.cssSelector("div.ui-dialog-content img"))
                 .is().not().visible();
         carList.remove();
