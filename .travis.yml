@@ -13,7 +13,6 @@ cache:
 script:
 - mvn clean test -Ptests -Darquillian.browser=chromeheadless
 after_success:
-- mvn clean package
 - docker login -u rmpestano -p ${pass}
 - mvn dockerfile:build -Pdocker
 - mvn dockerfile:push -Pdocker

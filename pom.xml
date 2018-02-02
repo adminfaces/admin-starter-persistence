@@ -401,7 +401,7 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <repository>rmpestano/admin-starter</repository>
+                            <repository>rmpestano/admin-starter-persistence</repository>
                             <tag>latest</tag>
                         </configuration>
                     </plugin>
