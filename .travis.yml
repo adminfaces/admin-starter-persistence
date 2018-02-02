@@ -4,10 +4,19 @@ addons:
 language: java
 jdk: oraclejdk8
 sudo: required
+services:
+- docker
 cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/.arquillian"
-
 script:
 - mvn clean test -Ptests -Darquillian.browser=chromeheadless
+after_success:
+- mvn clean package
+- docker login -u rmpestano -p ${pass}
+- mvn dockerfile:build -Pdocker
+- mvn dockerfile:push -Pdocker
+env:
+  global:
+    secure: to/7n4WZyvPce0S+sL3qP3XDMX99gjau2Kt+SVuZoEJuEjC+jEDLf2dYqtBQF7k2d+hMfnEGBJjz43pJDMEOR+qV3BasOyjtwBXABDymQEI5aPs0KkpJwSvGG0ykHdmga1KgX8j+zzjOudNAFjWTkO5hKbilLrTSh0eaGdWo3Arasd5N1bHHBGE9yjDz5AvIMT43dtzcHJ0zHgxnHldpkiARCsoACjMNDYj7QjP8YgtfKvIclwxqWttHnk4xtePuKN0H7MkRvE3aFRr2UDHOygIRToIq+eswtUKPOZiJyPpXOjvkxSXF8hctfPpwBrDhw4yQBfLqn7dU44ncW6GBiIm4WQtxDHvCusQH8o8i1rT+EVjLDUFN3pwjj7ijRhFRd9zblrKpwWrqU1MH72rmbQxV/TJ4Gp90dNXuGtcWO/48mQvEaScXJDeMB3FG/XP9Wyd+vohgJYfvl2l88GVSadm9Y+BWPhIFCN2w2mm7RhgzdhraWMV8EedDgBxi1kYNe9AfQczy8BHtb8gjAw1kZ/C69nZidYUJX9+p8YBlGbz2qPHFlJjMeaYUjVG/QqDa1xOdjuckwFy26blaTaPgXwJDgFVQGV5uOUtmqdAADGoyeMQELDPU9XgYNqbhCjspyk/j6AZgzR9TvFiPwFTKHyHMfkW59XmLO1svjUhlbi4=

@@ -41,7 +41,7 @@ import static org.junit.Assert.assertTrue;
 @RunWith(Arquillian.class)
 public class AdminFt {
 
-    @Deployment(name = "admin-starter.war", testable = false)
+    @Deployment(name = "admin-starter-ft.war", testable = false)
     public static Archive<?> createDeployment() {
         WebArchive war = Deployments.createDeployment();
         MavenResolverSystem resolver = Maven.resolver();

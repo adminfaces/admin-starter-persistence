@@ -33,7 +33,7 @@ import static org.junit.Assert.*;
 public class AdminIt {
 
 
-    @Deployment(name = "admin-starter.war",testable = true)
+    @Deployment(name = "admin-starter-it.war",testable = true)
     public static WebArchive createDeployment() {
         WebArchive war = Deployments.createDeployment();
         MavenResolverSystem resolver = Maven.resolver();
