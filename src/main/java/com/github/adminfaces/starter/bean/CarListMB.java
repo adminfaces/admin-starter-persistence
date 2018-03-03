@@ -65,15 +65,27 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
 
     public String getSearchCriteria() {
         StringBuilder sb = new StringBuilder(21);
+      
+        
 
-        String nameParam = null;
-        Car carFilter = filter.getEntity();
+       String nameParam = null;
+       Car carFilter = filter.getEntity();
+        
+       Integer idParam = null;
+       if (filter.hasParam("id")) {
+            idParam = filter.getIntParam("id");
+        }  
+       
+       if (has(idParam)) {
+            sb.append("<b>id</b>: " + idParam + ", ");
+        }
+        
         if (filter.hasParam("name")) {
             nameParam = filter.getStringParam("name");
         } else if (has(carFilter) && carFilter.getName() != null) {
             nameParam = carFilter.getName();
         }
-
+       
         if (has(nameParam)) {
             sb.append("<b>name</b>: " + nameParam + ", ");
         }
