@@ -28,9 +28,10 @@
 
         </style>
     </ui:define>
-
-    <ui:define name="title">
-        Car listing
+  
+  
+  <ui:define name="body-begin">
+        <ui:param name="title" value="Car listing"/> <!-- Automatic create breadCrumb and page title when param 'title' is provided. --> 
     </ui:define>
 
     <ui:define name="description">
@@ -38,7 +39,6 @@
     </ui:define>
 
     <ui:define name="body">
-        <adm:breadcrumb title="Car list"/>
 
         <h:form>
             <div class="box box-primary">
