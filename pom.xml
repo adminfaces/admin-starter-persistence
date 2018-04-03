@@ -32,12 +32,12 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>6.1</version>
+            <version>6.2</version>
         </dependency>
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
             <artifactId>primefaces-extensions</artifactId>
-            <version>6.0.0</version>
+            <version>6.1.1</version>
             <!-- only for gravatar, adminfaces doesn't depend on extensions-->
         </dependency>
         <dependency>
@@ -155,7 +155,7 @@
             <dependency>
                 <groupId>org.jboss.arquillian.selenium</groupId>
                 <artifactId>selenium-bom</artifactId>
-                <version>3.4.0</version>
+                <version>3.5.3</version>
                 <scope>import</scope>
                 <type>pom</type>
             </dependency>

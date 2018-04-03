@@ -29,6 +29,7 @@ public class CarFormMB extends CrudMB<Car> implements Serializable {
             addDetailMsg("Car " + entity.getModel()
                     + " removed successfully");
             Faces.redirect("car-list.xhtml");
+            clear();
         } catch (IOException e) {
             e.printStackTrace();
         }
