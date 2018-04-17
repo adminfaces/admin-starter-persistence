@@ -29,7 +29,9 @@ public class CarFormMB extends CrudMB<Car> implements Serializable {
             addDetailMsg("Car " + entity.getModel()
                     + " removed successfully");
             Faces.redirect("car-list.xhtml");
-            clear();
+            clear(); 
+            sessionFilter.clear(CarListMB.class.getName());//removes filter saved in session for CarListMB.
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -44,5 +46,6 @@ public class CarFormMB extends CrudMB<Car> implements Serializable {
     public void afterUpdate() {
         addDetailMsg("Car " + entity.getModel() + " updated successfully");
     }
+    
 
 }

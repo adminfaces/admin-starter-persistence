@@ -16,7 +16,6 @@ import java.util.List;
 import static com.github.adminfaces.persistence.util.Messages.addDetailMessage;
 import static com.github.adminfaces.template.util.Assert.has;
 
-
 /**
  * Created by rmpestano on 12/02/17.
  */
@@ -46,11 +45,11 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
             throw new BusinessException("Provide Car ID to load");
         }
         Car carFound = crudService.findById(id);
-        if(carFound == null) {
-            throw new BusinessException(String.format("No car found with id %s",id));
+        if (carFound == null) {
+            throw new BusinessException(String.format("No car found with id %s", id));
         }
         selectionList.add(carFound);
-        getFilter().addParam("id",id);
+        getFilter().addParam("id", id);
     }
 
     public void delete() {
@@ -66,27 +65,25 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
 
     public String getSearchCriteria() {
         StringBuilder sb = new StringBuilder(21);
-      
-        
 
-       String nameParam = null;
-       Car carFilter = filter.getEntity();
-        
-       Integer idParam = null;
-       if (filter.hasParam("id")) {
+        String nameParam = null;
+        Car carFilter = filter.getEntity();
+
+        Integer idParam = null;
+        if (filter.hasParam("id")) {
             idParam = filter.getIntParam("id");
-        }  
-       
-       if (has(idParam)) {
+        }
+
+        if (has(idParam)) {
             sb.append("<b>id</b>: " + idParam + ", ");
         }
-        
+
         if (filter.hasParam("name")) {
             nameParam = filter.getStringParam("name");
         } else if (has(carFilter) && carFilter.getName() != null) {
             nameParam = carFilter.getName();
         }
-       
+
         if (has(nameParam)) {
             sb.append("<b>name</b>: " + nameParam + ", ");
         }
@@ -133,6 +130,5 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
 
         return sb.toString();
     }
-
 
 }

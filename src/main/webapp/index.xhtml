@@ -2,7 +2,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                template="#{layoutMB.layout}">
+                template="#{layoutMB.template}">
 
     <ui:define name="head-end">
         <ui:param name="renderBreadCrumb" value="false"/>
@@ -22,33 +22,5 @@
         </h2>
 
     </ui:define>
-
-    <ui:define name="body">
-        <script type="text/javascript">
-            /*if ('serviceWorker' in navigator) {
-             navigator.serviceWorker.register('sw.js');
-             }*/
-
-
-            if ('serviceWorker' in navigator) {
-              /*  navigator.serviceWorker.getRegistrations().then(function (registrations) {
-                    for (let registration of registrations) {
-                        registration.unregister()
-                    }
-                });*/
-
-                 window.addEventListener('load', function () {
-                    navigator.serviceWorker.register('sw.js').then(function (registration) {
-                        // Registration was successful
-                        console.log('ServiceWorker registration successful with scope: ', registration.scope);
-                    }, function (err) {
-                        // registration failed :(
-                        console.log('ServiceWorker registration failed: ', err);
-                    });
-                });
-            }
-        </script>
-    </ui:define>
-
 
 </ui:composition>
