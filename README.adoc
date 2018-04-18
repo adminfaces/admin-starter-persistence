@@ -5,19 +5,21 @@ image:https://travis-ci.org/adminfaces/admin-starter-persistence.svg[Build Statu
 A simple project to get you started with https://github.com/adminfaces[AdminFaces^] using https://github.com/adminfaces/admin-persistence[AdminPersistence^] for utility persistence layer.
 
 .Login page
-image:starter1.png[]
+image:starter1.png[link="https://raw.githubusercontent.com/adminfaces/admin-starter-persistence/master/starter1.png"]
 
 .Car list
-image:starter2.png[]
+image:starter2.png[link="https://raw.githubusercontent.com/adminfaces/admin-starter-persistence/master/starter2.png"]
 
 .Car search
-image:starter5.png[]
+image:starter5.png[link="https://raw.githubusercontent.com/adminfaces/admin-starter-persistence/master/starter5.png"]
 
 .Car form
-image:starter3.png[]
+image:starter3.png[link="https://raw.githubusercontent.com/adminfaces/admin-starter-persistence/master/starter3.png"]
 
 .Car form responsive
-image:starter4.png[]
+image:starter4.png[link="https://raw.githubusercontent.com/adminfaces/admin-starter-persistence/master/starter4.png"]
+
+
 
 == Running
 
