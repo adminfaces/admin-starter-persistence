@@ -51,7 +51,7 @@
                                     resetValues="true" icon="fa fa-refresh"/>
                         <p:menuitem value="Delete" action="#{carFormMB.remove}" process="@this"
                                     rendered="#{not carFormMB.isNew()}" icon="fa fa-trash"
-                                 >
+                                    >
                             <p:confirm header="Confirmation" message="Are you sure?" icon="ui-icon-danger"/>
                         </p:menuitem>
                         <p:separator/>
@@ -63,29 +63,29 @@
                     <p:separator/>
 
                     <div class="ui-g ui-fluid">
-                        <div class="ui-g-12 ui-lg-2 ui-xl-1">
+                        <div class="ui-sm-12 ui-md-2 ui-lg-1">
                             <p:outputLabel for="id" value="ID"/>
                         </div>
-                        <div class="ui-g-12 ui-lg-10 ui-xl-11" >
+                        <div class="ui-sm-12 ui-md-4 ui-lg-5" >
                             <p:inputText id="id" value="#{carFormMB.entity.id}" size="4"
-                                         readonly="true" styleClass="form-control"/>
+                                         readonly="true" styleClass="form-control" style="width: 100%"/>
                         </div>
-                        <div class="ui-g-12 ui-lg-2 ui-xl-1">
+                        <div class="ui-sm-12 ui-md-2 ui-lg-1">
                             <p:outputLabel value="Model" for="inptModel"/>
                         </div>
-                        <div class="ui-g-12 ui-lg-10 ui-xl-11">
+                        <div class="ui-sm-12 ui-md-4 ui-lg-5" >
                             <p:inputText id="inptModel" value="#{carFormMB.entity.model}"/>
                         </div>
-                        <div class="ui-g-12 ui-lg-2 ui-xl-1">
+                        <div class="ui-sm-12 ui-md-2 ui-lg-1">
                             <p:outputLabel value="Name" for="inptName"/>
                         </div>
-                        <div class="ui-g-12 ui-lg-10 ui-xl-11">
+                        <div class="ui-sm-12 ui-md-4 ui-lg-5" >
                             <p:inputText id="inptName" value="#{carFormMB.entity.name}"/>
                         </div>
-                        <div class="ui-g-12 ui-lg-2 ui-xl-1">
+                        <div class="ui-sm-12 ui-md-2 ui-lg-1">
                             <p:outputLabel value="Price" for="inptPrice"/>
                         </div>
-                        <div class="ui-g-12 ui-lg-10 ui-xl-11">
+                        <div class="ui-sm-12 ui-md-4 ui-lg-5" >
                             <p:inputNumber id="inptPrice" value="#{carFormMB.entity.price}"/>
                         </div>
                     </div>
