@@ -2,7 +2,7 @@
 
 image:https://travis-ci.org/adminfaces/admin-starter-persistence.svg[Build Status (Travis CI), link=https://travis-ci.org/adminfaces/admin-starter-persistence]
 
-A simple project to get you started with https://github.com/adminfaces[AdminFaces^] using https://github.com/adminfaces/admin-persistence[AdminPersistence^] for utility persistence layer.
+A simple project to get you started with https://github.com/adminfaces[AdminFaces^] using https://github.com/adminfaces/admin-persistence[Admin Persistence^] for utility persistence layer.
 
 .Login page
 image:starter1.png[link="https://raw.githubusercontent.com/adminfaces/admin-starter-persistence/master/starter1.png"]
