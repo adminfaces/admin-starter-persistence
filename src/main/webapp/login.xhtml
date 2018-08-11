@@ -19,6 +19,29 @@
         <meta name="mobile-web-app-capable" content="yes"/>
 
         <style type="text/css">
+            
+            @media (max-width: 768px) {
+                
+                body div.ui-growl {
+                    display: none;
+                }
+                
+               body div.ui-messages-error {
+                    display: block;
+                }
+
+            }
+
+            @media (min-width: 769px) {
+              body div.ui-growl {
+                    display: block;
+                }
+
+              body div.ui-messages-error {
+                    display: none;
+                }
+            }
+            
             body.login-page {
                 background-color: transparent;
             }
