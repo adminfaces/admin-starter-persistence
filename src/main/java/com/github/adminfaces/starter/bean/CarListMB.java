@@ -3,6 +3,7 @@ package com.github.adminfaces.starter.bean;
 import com.github.adminfaces.persistence.bean.CrudMB;
 import com.github.adminfaces.persistence.service.CrudService;
 import com.github.adminfaces.persistence.service.Service;
+import com.github.adminfaces.persistence.util.Messages;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.service.CarService;
 import com.github.adminfaces.template.exception.BusinessException;
@@ -76,7 +77,7 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
         }
 
         if (has(idParam)) {
-            sb.append("<b>id</b>: " + idParam + ", ");
+            sb.append("<b>id</b>: ").append(idParam).append(", ");
         }
 
         if (filter.hasParam("name")) {
@@ -86,7 +87,7 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
         }
 
         if (has(nameParam)) {
-            sb.append("<b>name</b>: " + nameParam + ", ");
+            sb.append("<b>name</b>: ").append(nameParam).append(", ");
         }
 
         String modelParam = null;
@@ -97,7 +98,7 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
         }
 
         if (has(modelParam)) {
-            sb.append("<b>model</b>: " + modelParam + ", ");
+            sb.append("<b>model</b>: ").append(modelParam).append(", ");
         }
 
         Double priceParam = null;
@@ -108,15 +109,15 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
         }
 
         if (has(priceParam)) {
-            sb.append("<b>price</b>: " + priceParam + ", ");
+            sb.append("<b>price</b>: ").append(priceParam).append(", ");
         }
 
         if (filter.hasParam("minPrice")) {
-            sb.append("<b>" + getMessage("label.minPrice") + "</b>: " + filter.getParam("minPrice") + ", ");
+            sb.append("<b>").append(getMessage("label.minPrice")).append("</b>: ").append(filter.getParam("minPrice")).append(", ");
         }
 
         if (filter.hasParam("maxPrice")) {
-            sb.append("<b>" + getMessage("label.maxPrice") + "</b>: " + filter.getParam("maxPrice") + ", ");
+            sb.append("<b>").append(getMessage("label.maxPrice")).append("</b>: ").append(filter.getParam("maxPrice")).append(", ");
         }
 
         int commaIndex = sb.lastIndexOf(",");
