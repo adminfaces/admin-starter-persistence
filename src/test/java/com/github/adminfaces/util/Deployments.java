@@ -2,10 +2,7 @@ package com.github.adminfaces.util;
 
 import com.github.adminfaces.template.exception.BusinessException;
 import com.github.adminfaces.template.util.Assert;
-import org.jboss.shrinkwrap.api.Filters;
-import org.jboss.shrinkwrap.api.GenericArchive;
 import org.jboss.shrinkwrap.api.ShrinkWrap;
-import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;

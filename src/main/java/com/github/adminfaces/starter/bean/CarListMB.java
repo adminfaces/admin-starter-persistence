@@ -14,6 +14,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import static com.github.adminfaces.persistence.util.Messages.addDetailMessage;
+import static com.github.adminfaces.persistence.util.Messages.getMessage;
 import static com.github.adminfaces.template.util.Assert.has;
 
 /**
@@ -111,11 +112,11 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
         }
 
         if (filter.hasParam("minPrice")) {
-            sb.append("<b>" + messages.getMessage("label.minPrice") + "</b>: " + filter.getParam("minPrice") + ", ");
+            sb.append("<b>" + getMessage("label.minPrice") + "</b>: " + filter.getParam("minPrice") + ", ");
         }
 
         if (filter.hasParam("maxPrice")) {
-            sb.append("<b>" + messages.getMessage("label.maxPrice") + "</b>: " + filter.getParam("maxPrice") + ", ");
+            sb.append("<b>" + getMessage("label.maxPrice") + "</b>: " + filter.getParam("maxPrice") + ", ");
         }
 
         int commaIndex = sb.lastIndexOf(",");
