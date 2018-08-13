@@ -2,7 +2,6 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
       xmlns:adm="http://github.com/adminfaces"
       xmlns:p="http://primefaces.org/ui">
 
@@ -16,38 +15,35 @@
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-32x32.png']}" sizes="32x32"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-96x96.png']}" sizes="96x96"/>
         <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-144x144.png']}" sizes="144x144"/>
-        <link rel="shortcut icon" type="image/x-icon" href="#{resource['favicon/favicon-196x196.png']}" sizes="196x196"/>
         <meta name="theme-color" content="#444"/>
         <meta name="mobile-web-app-capable" content="yes"/>
 
         <style type="text/css">
-            
-            body .load-bar {
-                margin-top: -20px;
-            }
 
+            /* below css hides growls in small screens and makes messages visible */
             @media (max-width: 768px) {
-                
+
                 body div.ui-growl {
                     display: none;
                 }
-                
-               body div.ui-messages-error {
+
+                body div.ui-messages-error {
                     display: block;
                 }
 
             }
-
+            
+           /* below css hides messages in medium/big devices and makes growl visible in such devices */
             @media (min-width: 769px) {
-              body div.ui-growl {
+                body div.ui-growl {
                     display: block;
                 }
 
-              body div.ui-messages-error {
+                body div.ui-messages-error {
                     display: none;
                 }
             }
-            
+
             body.login-page {
                 background-color: transparent;
             }
@@ -59,24 +55,11 @@
                 -o-background-size: cover;
                 background-size: cover;
             }
-            
-             body .login-logo {
-                margin: 20px;   
-                text-align: right;
-                font-size: 60px;
-                font-weight: 500
-            }
-
-            @media (max-width: 1024px) {
-                body .login-logo {
-                    text-align: center;
-                }
-            }
         </style>
     </h:head>
 
     <h:body styleClass="hold-transition login-page">
-         <p:growl autoUpdate="true" sticky="true"/>
+        <p:growl autoUpdate="true" sticky="true"/>
         <div id="loader" class="load-bar" style="display: none">
             <div class="bar"></div>
             <div class="bar"></div>
