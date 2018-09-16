@@ -13,9 +13,7 @@ import org.apache.deltaspike.data.api.criteria.Criteria;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.metamodel.SingularAttribute;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 
 import static com.github.adminfaces.template.util.Assert.has;

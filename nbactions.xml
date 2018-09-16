@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<actions>
+        <action>
+            <actionName>CUSTOM-test</actionName>
+            <displayName>test</displayName>
+            <goals>
+                <goal>test</goal>
+            </goals>
+            <activatedProfiles>
+                <activatedProfile>tests</activatedProfile>
+                <activatedProfile>wildfly-remote</activatedProfile>
+            </activatedProfiles>
+        </action>
+    </actions>
