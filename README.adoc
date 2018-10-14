@@ -1,6 +1,7 @@
 = AdminFaces Starter Persistence
 
 image:https://travis-ci.org/adminfaces/admin-starter-persistence.svg[Build Status (Travis CI), link=https://travis-ci.org/adminfaces/admin-starter-persistence]
+image:https://sonarcloud.io/api/project_badges/measure?project=com.github.adminfaces:admin-starter&metric=alert_status["Sonar", link="https://sonarcloud.io/dashboard?id=com.github.adminfaces%3Aadmin-starter"]
 
 A simple project to get you started with https://github.com/adminfaces[AdminFaces^] using https://github.com/adminfaces/admin-persistence[Admin Persistence^] for utility persistence layer.
 
