@@ -11,7 +11,6 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 import static org.jboss.arquillian.graphene.Graphene.guardAjax;
-import static org.jboss.arquillian.graphene.Graphene.guardHttp;
 import static org.jboss.arquillian.graphene.Graphene.waitModel;
 
 @Location("car-list.xhtml")

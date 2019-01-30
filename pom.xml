@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <adminfaces.version>1.0.0-RC20</adminfaces.version>
+        <adminfaces.version>1.0.0-RC21-SNAPSHOT</adminfaces.version>
         <version.hibernate>5.1.8.Final</version.hibernate>
         <version.deltaspike>1.8.0</version.deltaspike>
         <arquillian.container>wildfly:8.2.0.Final:managed</arquillian.container>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>6.2</version>
+            <version>7.0.RC2</version>
         </dependency>
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-persistence</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
 
         <!-- persistence -->
@@ -300,7 +300,7 @@
         <profile>
             <id>swarm</id>
             <properties>
-                <version.wildfly-swarm>2017.5.0</version.wildfly-swarm>
+                <version.wildfly-swarm>2018.3.3</version.wildfly-swarm>
             </properties>
 
             <dependencies>
@@ -477,12 +477,12 @@
             <name>libs-snapshot</name>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
-        <repository>
-            <id>prime-repo</id>
-            <name>PrimeFaces Maven Repository</name>
-            <url>http://repository.primefaces.org</url>
-            <layout>default</layout>
-        </repository>
+		<repository>
+			<id>prime-repo</id>
+			<name>PrimeFaces Maven Repository</name>
+			<url>http://repository.primefaces.org</url>
+			<layout>default</layout>
+		</repository>
     </repositories>
 
 </project>
