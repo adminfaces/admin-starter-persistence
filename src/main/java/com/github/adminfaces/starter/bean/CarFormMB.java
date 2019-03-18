@@ -6,6 +6,7 @@ package com.github.adminfaces.starter.bean;
 
 import com.github.adminfaces.persistence.bean.BeanService;
 import com.github.adminfaces.persistence.bean.CrudMB;
+import com.github.adminfaces.persistence.service.CrudService;
 import com.github.adminfaces.starter.model.Car;
 import com.github.adminfaces.starter.service.CarService;
 import org.omnifaces.cdi.ViewScoped;
@@ -14,6 +15,7 @@ import org.omnifaces.util.Faces;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.logging.Level;
 
 /**
  * @author rmpestano
@@ -33,7 +35,7 @@ public class CarFormMB extends CrudMB<Car> implements Serializable {
             sessionFilter.clear(CarListMB.class.getName());//removes filter saved in session for CarListMB.
             
         } catch (IOException e) {
-            e.printStackTrace();
+            log.log(Level.WARNING, "",e);
         }
     }
 
