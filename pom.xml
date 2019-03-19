@@ -35,12 +35,6 @@
             <version>7.0</version>
         </dependency>
         <dependency>
-            <groupId>org.primefaces.extensions</groupId>
-            <artifactId>primefaces-extensions</artifactId>
-            <version>6.1.1</version>
-            <!-- only for gravatar, adminfaces doesn't depend on extensions-->
-        </dependency>
-        <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-template</artifactId>
             <version>${adminfaces.version}</version>
@@ -51,7 +45,12 @@
             <version>${adminfaces.version}</version>
             <!--<classifier>dev</classifier> uncompressed theme.css (note that you need to exclude admin-theme brought by admin-template dependency)-->
         </dependency>
-
+        <dependency>
+            <groupId>org.primefaces.extensions</groupId>
+            <artifactId>primefaces-extensions</artifactId>
+            <version>6.1.1</version>
+            <!-- only for gravatar, adminfaces doesn't depend on extensions-->
+        </dependency>
         <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-persistence</artifactId>
