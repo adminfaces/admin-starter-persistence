@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <adminfaces.version>1.0.0-RC21</adminfaces.version>
+        <adminfaces.version>1.0.0-RC22-SNAPSHOT</adminfaces.version>
         <version.hibernate>5.1.8.Final</version.hibernate>
         <version.deltaspike>1.8.0</version.deltaspike>
         <arquillian.container>wildfly:8.2.0.Final:managed</arquillian.container>
@@ -32,7 +32,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>7.0.RC3</version>
+            <version>7.0</version>
         </dependency>
         <dependency>
             <groupId>org.primefaces.extensions</groupId>
