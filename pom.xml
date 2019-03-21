@@ -13,7 +13,7 @@
         <adminfaces.version>1.0.0-RC22-SNAPSHOT</adminfaces.version>
         <version.hibernate>5.1.8.Final</version.hibernate>
         <version.deltaspike>1.8.0</version.deltaspike>
-        <arquillian.container>wildfly:8.2.0.Final:managed</arquillian.container>
+        <arquillian.container>wildfly:15.0.1.Final:managed</arquillian.container>
         <arquillian.browser>chrome</arquillian.browser>
         <sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
         <sonar.jacoco.reportPath>${project.build.directory}/jacoco.exec</sonar.jacoco.reportPath>
@@ -60,7 +60,7 @@
         <dependency>
             <groupId>org.omnifaces</groupId>
             <artifactId>omnifaces</artifactId>
-            <version>2.6.9</version>
+            <version>3.2</version>
         </dependency>
 
         <!-- persistence -->

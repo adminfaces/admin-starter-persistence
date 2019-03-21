@@ -25,7 +25,6 @@ import java.util.logging.Level;
 @BeanService(CarService.class)//use annotation instead of setter
 public class CarFormMB extends CrudMB<Car> implements Serializable {
 
-
     public void afterRemove() {
         try {
             addDetailMsg("Car " + entity.getModel()
@@ -33,8 +32,7 @@ public class CarFormMB extends CrudMB<Car> implements Serializable {
             Faces.redirect("car-list.xhtml");
             clear();
             sessionFilter.clear(CarListMB.class.getName());//removes filter saved in session for CarListMB.
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.log(Level.WARNING, "", e);
         }
     }
