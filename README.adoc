@@ -45,3 +45,16 @@ The application is available at http://localhost:8080/admin-starter
 == Demo
 
 A live demo is available on https://adminfaces.github.io/admin-starter/[Openshift here^]
+
+== Test
+
+To run tests execute following maven command:
+
+* `mvn test -Ptests` for all tests
+* `mvn test -Pblackbox` for functional tests
+* `mvn test -Pwhitebox` for integration tests
+
+See the following video to see the tests in action: https://youtu.be/9_khZVsDO0Y
+
+
+
