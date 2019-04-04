@@ -1,0 +1,3 @@
+FROM tomee:8-jre-8.0.0-M2-plus
+
+COPY ./target/admin-starter.war /usr/local/tomee/webapps/admin-starter.war
