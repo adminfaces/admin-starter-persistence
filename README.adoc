@@ -1,4 +1,14 @@
 = AdminFaces Starter Persistence
+:toc: preamble
+:sectanchors:
+:sectlink:
+:numbered:
+:imagesdir: images
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
 
 image:https://travis-ci.org/adminfaces/admin-starter-persistence.svg[Build Status (Travis CI), link=https://travis-ci.org/adminfaces/admin-starter-persistence]
 image:https://sonarcloud.io/api/project_badges/measure?project=com.github.adminfaces:admin-starter&metric=alert_status["Sonar", link="https://sonarcloud.io/dashboard?id=com.github.adminfaces%3Aadmin-starter"]
