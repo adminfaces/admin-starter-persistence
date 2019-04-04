@@ -7,9 +7,9 @@
     <persistence-unit name="StarterPU" transaction-type="JTA">
         <jta-data-source>java:comp/DefaultDataSource</jta-data-source>
         <properties>
-            <property name="hibernate.hbm2ddl.auto" value="create"/>
-            <property name="eclipselink.ddl-generation" value="create-tables"/>
-            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create" />
+            <property name="eclipselink.ddl-generation" value="create-tables"/> <!-- needed by payara/eclipselink -->
+            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/> <!-- needed by tomee/openjpa -->
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="false"/>
         </properties>
