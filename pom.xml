@@ -10,7 +10,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <adminfaces.version>1.0.0-RC22-SNAPSHOT</adminfaces.version>
+        <adminfaces.version>1.0.0</adminfaces.version>
         <version.hibernate>5.1.8.Final</version.hibernate>
         <version.deltaspike>1.8.0</version.deltaspike>
         <arquillian.container>wildfly:15.0.1.Final:managed</arquillian.container>
