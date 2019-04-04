@@ -9,6 +9,7 @@
         <properties>
             <property name="hibernate.hbm2ddl.auto" value="create"/>
             <property name="eclipselink.ddl-generation" value="create-tables"/>
+            <property name="openjpa.jdbc.SynchronizeMappings" value="buildSchema(ForeignKeys=true)"/>
             <property name="hibernate.show_sql" value="true"/>
             <property name="hibernate.format_sql" value="false"/>
         </properties>
