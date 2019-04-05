@@ -1,22 +1,23 @@
 package com.github.adminfaces.starter.bean;
 
-import com.github.adminfaces.persistence.bean.CrudMB;
-import com.github.adminfaces.persistence.service.CrudService;
-import com.github.adminfaces.persistence.service.Service;
-import com.github.adminfaces.persistence.util.Messages;
-import com.github.adminfaces.starter.model.Car;
-import com.github.adminfaces.starter.service.CarService;
-import com.github.adminfaces.template.exception.BusinessException;
-import org.omnifaces.cdi.ViewScoped;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.Serializable;
-import java.util.List;
-
 import static com.github.adminfaces.persistence.util.Messages.addDetailMessage;
 import static com.github.adminfaces.persistence.util.Messages.getMessage;
 import static com.github.adminfaces.template.util.Assert.has;
+
+import java.io.Serializable;
+import java.util.List;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+
+import org.omnifaces.cdi.ViewScoped;
+
+import com.github.adminfaces.persistence.bean.CrudMB;
+import com.github.adminfaces.persistence.service.CrudService;
+import com.github.adminfaces.persistence.service.Service;
+import com.github.adminfaces.starter.model.Car;
+import com.github.adminfaces.starter.service.CarService;
+import com.github.adminfaces.template.exception.BusinessException;
 
 /**
  * Created by rmpestano on 12/02/17.
@@ -30,7 +31,7 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
 
     @Inject
     @Service
-    CrudService<Car, Integer> crudService; //generic injection
+    CrudService<Car, Integer> carCrudService; //generic injection example
 
     @Inject
     public void initService() {
@@ -46,7 +47,7 @@ public class CarListMB extends CrudMB<Car> implements Serializable {
         if (id == null) {
             throw new BusinessException("Provide Car ID to load");
         }
-        Car carFound = crudService.findById(id);
+        Car carFound = carCrudService.findById(id);
         if (carFound == null) {
             throw new BusinessException(String.format("No car found with id %s", id));
         }

@@ -1,9 +1,14 @@
 package com.github.adminfaces.ft;
 
-import com.github.adminfaces.ft.pages.*;
-import com.github.adminfaces.ft.pages.fragments.LeftMenu;
-import com.github.adminfaces.ft.pages.fragments.SearchDialog;
-import com.github.adminfaces.util.Deployments;
+import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.jboss.arquillian.graphene.Graphene.guardHttp;
+import static org.jboss.arquillian.graphene.Graphene.waitGui;
+import static org.jboss.arquillian.graphene.Graphene.waitModel;
+import static org.junit.Assert.assertTrue;
+
+import java.net.URL;
+import java.util.concurrent.TimeUnit;
+
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.drone.api.annotation.Drone;
 import org.jboss.arquillian.graphene.GrapheneElement;
@@ -21,19 +26,19 @@ import org.jboss.shrinkwrap.api.importer.ExplodedImporter;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.maven.Maven;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenResolverSystem;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.interactions.Actions;
 
-import java.net.URL;
-import java.util.concurrent.TimeUnit;
-
-import static org.assertj.core.api.Java6Assertions.assertThat;
-import static org.jboss.arquillian.graphene.Graphene.*;
-import static org.junit.Assert.assertTrue;
+import com.github.adminfaces.ft.pages.CarFormPage;
+import com.github.adminfaces.ft.pages.CarListPage;
+import com.github.adminfaces.ft.pages.IndexPage;
+import com.github.adminfaces.ft.pages.LogonPage;
+import com.github.adminfaces.ft.pages.fragments.LeftMenu;
+import com.github.adminfaces.ft.pages.fragments.SearchDialog;
+import com.github.adminfaces.util.Deployments;
 
 /**
  * Car acceptance tests
@@ -49,7 +54,6 @@ public class AdminFt {
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("com.github.adminfaces:admin-template").withTransitivity().asFile());
         war.addAsLibraries(resolver.loadPomFromFile("pom.xml").resolve("org.omnifaces:omnifaces").withoutTransitivity().asSingleFile());
         war.merge(ShrinkWrap.create(GenericArchive.class).as(ExplodedImporter.class).importDirectory("src/main/webapp").as(GenericArchive.class), "/", Filters.include(".*\\.(xml|xhtml|html|css|js|png|jpg|gif)$"));
-
         System.out.println(war.toString(true));
         return war;
     }
@@ -171,7 +175,7 @@ public class AdminFt {
 
     @Test
     @InSequence(8)
-    @Ignore("yes button from confirm dialog is not enabled")
+    //@Ignore("yes button from confirm dialog is not enabled")
     public void shouldRemoveCar() {
         waitModel(webDriver);
         carForm.remove();
@@ -212,6 +216,7 @@ public class AdminFt {
         waitModel().until().element(By.cssSelector("li.open")).is().present();
         webDriver.findElement(By.id("logout")).click();
         waitModel().until().element(logon.getLoginBox()).is().present();
+        assertThat(webDriver.findElement(By.className("login-logo")).isDisplayed()).isTrue();
     }
 
 
