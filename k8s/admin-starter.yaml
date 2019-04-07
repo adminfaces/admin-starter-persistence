@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: admin-starter
-        image: rmpestano/admin-starter-persistence:1.0.0
+        image: rmpestano/admin-starter-persistence:1.0.1
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
