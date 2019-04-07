@@ -3,6 +3,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:p="http://primefaces.org/ui"
                 template="/admin-top.xhtml">
 
     <ui:define name="head">
@@ -43,10 +44,13 @@
 
 
     <ui:define name="footer">
-        <a target="_blank"
-           href="https://github.com/adminfaces/admin-starter-persistence">
-            Copyright (C) 2017-2018 - AdminFaces Starter Project
-        </a>
+        <p:outputPanel>
+            <p:autoUpdate/>
+            <a target="_blank"
+               href="https://github.com/adminfaces/admin-starter-persistence">
+                AdminFaces Starter@${logonMB.podName}
+            </a>
+        </p:outputPanel>
 
         <div class="pull-right hidden-xs" style="color: gray">
             <i>#{msg['starter.version']}</i>

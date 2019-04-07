@@ -1,11 +1,14 @@
 package com.github.adminfaces.starter.infra.security;
 
 import com.github.adminfaces.template.session.AdminSession;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.omnifaces.util.Faces;
 
 import javax.enterprise.context.SessionScoped;
 import javax.enterprise.inject.Specializes;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.inject.Provider;
 import java.io.IOException;
 import java.io.Serializable;
 
@@ -33,6 +36,9 @@ public class LogonMB extends AdminSession implements Serializable {
     private String password;
     private boolean remember;
 
+    @Inject
+    @ConfigProperty(name = "MY_POD_NAME", defaultValue = "localhost")
+    Provider<String> podName; //shows k8s podName on the footer
 
     public void login() throws IOException {
         currentUser = email;
@@ -78,4 +84,10 @@ public class LogonMB extends AdminSession implements Serializable {
     public void setCurrentUser(String currentUser) {
         this.currentUser = currentUser;
     }
+
+
+    public String getPodName() {
+        return podName.get();
+    }
+
 }

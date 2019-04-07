@@ -1,0 +1,60 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: admin-starter
+  labels:
+    app: admin-starter
+spec:
+  selector:
+    app: admin-starter
+  ports:
+    - port: 8080
+      name: http
+  sessionAffinity: ClientIP
+  type: NodePort
+---
+
+kind: Deployment
+apiVersion: apps/v1beta1
+metadata:
+  name: admin-starter
+spec:
+  replicas: 4
+  template:
+    metadata:
+      labels:
+        app: admin-starter
+        version: v1
+    spec:
+      containers:
+      - name: admin-starter
+        image: rmpestano/admin-starter-persistence:1.0.0
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        - containerPort: 9990
+        env:
+        - name: MY_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: MY_POD_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.name
+        livenessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - curl -f localhost:8080/
+          initialDelaySeconds: 40
+        readinessProbe:
+          exec:
+            command:
+            - /bin/bash
+            - -c
+            - curl -f localhost:9990/health
+          initialDelaySeconds: 60
+      restartPolicy: Always
+---
