@@ -22,7 +22,7 @@ public class Deployments {
      * @return base WebArchive for all arquillian tests
      */
     public static WebArchive createDeployment() {
-        WebArchive war = ShrinkWrap.create(WebArchive.class);
+        WebArchive war = ShrinkWrap.create(WebArchive.class, "admin-starter-test.war");
         war.addPackages(true, "com.github.adminfaces.starter");
         war.addClasses(BusinessException.class, Assert.class);
         //LIBS

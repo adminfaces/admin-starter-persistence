@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <adminfaces.version>1.0.0</adminfaces.version>
         <version.hibernate>5.1.8.Final</version.hibernate>
-        <version.deltaspike>1.8.0</version.deltaspike>
+        <version.deltaspike>1.8.2</version.deltaspike>
         <arquillian.container>wildfly:15.0.1.Final:managed</arquillian.container>
         <arquillian.browser>chrome</arquillian.browser>
         <sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
@@ -54,7 +54,7 @@
         <dependency>
             <groupId>com.github.adminfaces</groupId>
             <artifactId>admin-persistence</artifactId>
-            <version>1.0.5</version>
+            <version>1.0.6</version>
         </dependency>
 
         <dependency>
@@ -297,7 +297,7 @@
         <profile>
             <id>wildfly-remote</id>
             <properties>
-                <arquillian.container>wildfly:8.2.0.Final:remote</arquillian.container>
+                <arquillian.container>wildfly:15.0.1.Final:remote</arquillian.container>
             </properties>
         </profile>
 
