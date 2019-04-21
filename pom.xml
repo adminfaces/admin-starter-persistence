@@ -15,6 +15,7 @@
         <version.deltaspike>1.8.2</version.deltaspike>
         <arquillian.container>wildfly:15.0.1.Final:managed</arquillian.container>
         <arquillian.browser>chrome</arquillian.browser>
+        <arquillian.remote>false</arquillian.remote>
         <sonar.surefire.reportsPath>${project.build.directory}/surefire-reports</sonar.surefire.reportsPath>
         <sonar.jacoco.reportPath>${project.build.directory}/jacoco.exec</sonar.jacoco.reportPath>
         <sonar.language>java</sonar.language>

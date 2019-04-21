@@ -16,6 +16,8 @@
 		<property name="browser">${arquillian.browser}</property>
 		<property name="dimensions">1280x1024</property>
         <property name="chromeDriverVersion">2.46</property>
+        <property name="remote">${arquillian.remote}</property>
+        <property name="remoteAddress">http://ondemand.saucelabs.com:80/wd/hub</property>
 	</extension>
 
 	<extension qualifier="graphene">
