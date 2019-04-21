@@ -18,6 +18,8 @@
         <property name="chromeDriverVersion">2.46</property>
         <property name="remote">${arquillian.remote}</property>
         <property name="remoteAddress">http://ondemand.saucelabs.com:80/wd/hub</property>
+        <property name="username">rmpestano</property>
+        <property name="accessKey">${SAUCE_KEY}</property>
 	</extension>
 
 	<extension qualifier="graphene">
