@@ -21,6 +21,7 @@
         <sonar.language>java</sonar.language>
         <sonar.core.codeCoveragePlugin>jacoco</sonar.core.codeCoveragePlugin>
         <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
+        <SAUCE_KEY></SAUCE_KEY>
     </properties>
 
     <dependencies>
