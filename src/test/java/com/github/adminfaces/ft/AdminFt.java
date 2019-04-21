@@ -175,7 +175,7 @@ public class AdminFt {
 
     @Test
     @InSequence(8)
-    @Ignore("yes button from confirm dialog is not enabled")
+    //@Ignore("yes button from confirm dialog is not enabled")
     public void shouldRemoveCar() {
         waitModel(webDriver);
         carForm.remove();
