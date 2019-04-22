@@ -1,9 +1,6 @@
 dist: trusty
 addons:
   chrome: stable
-  sauce_connect:
-    username: "rmpestano"
-    access_key: ${SAUCE_TOKEN}  
 language: java
 jdk: oraclejdk8
 sudo: required
@@ -14,8 +11,9 @@ cache:
   - "$HOME/.m2/repository"
   - "$HOME/.arquillian"
 script:
-- mvn clean test -Ptests -Darquillian.browser=chrome -Pcoverage -Darquillian.remote=true -DSAUCE_KEY=${SAUCE_TOKEN}
-- mvn sonar:sonar -Dsonar.organization=adminfaces -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=${SONAR_KEY}
+- mvn clean test -Ptests -Darquillian.browser=chromeheadless -Pcoverage
+- mvn sonar:sonar -Dsonar.organization=adminfaces -Dsonar.host.url=https://sonarcloud.io
+  -Dsonar.login=${SONAR_KEY}
 after_success:
 - mvn clean package
 - docker login -u rmpestano -p ${pass}
