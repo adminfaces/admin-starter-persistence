@@ -10,6 +10,8 @@ cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/.arquillian"
+before_script:
+  - bundle exec chromedriver-update 73.0.3683.68  
 script:
 - mvn clean test -Ptests -Darquillian.browser=chromeheadless -Pcoverage
 - mvn sonar:sonar -Dsonar.organization=adminfaces -Dsonar.host.url=https://sonarcloud.io
