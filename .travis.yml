@@ -3,7 +3,7 @@ addons:
   chrome: stable
 language: java
 rvm:
-- 2.2.0
+- 2.4.2
 jdk: oraclejdk8
 sudo: required
 services:
@@ -12,7 +12,10 @@ cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/.arquillian"
+  bundler: true
 before_script:
+  - gem update --system
+  - gem install bundler
   - bundle exec chromedriver-update 73.0.3683.68  
 script:
 - mvn clean test -Ptests -Darquillian.browser=chromeheadless -Pcoverage
