@@ -67,6 +67,7 @@ public class CarFormPage {
     public void remove() {
         btRemove.click();
         waitModel().until().element(confirmHeader).is().present();
-        btYes.click();
+        guardAjax(btYes).click();
+        waitModel().until().element(By.cssSelector("ui-datatable")).is().visible();
     }
 }
