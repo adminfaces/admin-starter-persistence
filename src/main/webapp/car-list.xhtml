@@ -86,7 +86,7 @@
 
                     <p:separator/>
                     <p:dataTable widgetVar="carsTable" var="c" value="#{carListMB.list}" rows="5"
-                                 rowKey="#{c.id}" lazy="true" paginator="true"
+                                 rowKey="#{c.id}" lazy="true" paginator="true" sortMode="multiple"
                                  filteredValue="#{carListMB.filteredValue}" sortBy="id"
                                  paginatorPosition="bottom" selection="#{carListMB.selectionList}"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {JumpToPageDropdown}"
