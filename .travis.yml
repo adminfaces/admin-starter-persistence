@@ -4,7 +4,7 @@ addons:
 language: java
 rvm:
 - 2.4.2
-jdk: openjdk-8-jre
+jdk: openjdk-11
 sudo: false
 services:
 - docker
