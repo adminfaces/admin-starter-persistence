@@ -10,7 +10,7 @@
         <configuration>
             <property name="chameleonTarget">${arquillian.container}</property>
             <property name="outputToConsole">true</property>
-            <property name="javaVmArguments">-Xmx512m -Djboss.bind.address=localhost -XX:MaxPermSize=512m</property>
+            <property name="javaVmArguments">-Xmx512m -Djboss.bind.address=localhost</property>
         </configuration>
     </container>
 
